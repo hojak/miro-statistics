@@ -32,7 +32,7 @@
     "lint:jsfix": "eslint --fix --ext .js,.jex .",
     "lint:html": "htmllint src/html/*.html",
     "test": "nyc --reporter=text mocha --recursive",
-    "test:unit": "mocha --recursive test/app",
+    "test:unit": "mocha --recursive test/js",
     "test:watch": "mocha \"test/**/*.js\" --watch --watch-extensions js",
     "complexity:src": "complexity-report-html src && mv .complexity-report/report.html .complexity-report/src.html",
     "complexity:test": "complexity-report-html test && mv .complexity-report/report.html .complexity-report/test.html",
