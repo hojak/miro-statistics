@@ -64,6 +64,12 @@ class ItemEventList {
         return this.items.length == 0;
     }
 
+    toReadableMiroList () {
+        return this.items
+            .map ( item => item.readableMiroRepresentation )
+            .join (",\n");
+    }
+
 }
 
 module.exports = ItemEventList;

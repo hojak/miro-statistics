@@ -63,8 +63,6 @@ describe('ItemEventList', function() {
                 expect ( error ).is.equal(ItemEventList.ERROR_NEIGHBOR_CONFLICT);
             }
         });
-
-
     });
   });
 
@@ -91,6 +89,20 @@ describe('ItemEventList', function() {
         })
       });
     });
+  });
+
+
+  describe ( '#toReadableMiroList', function () {
+    it ('has to print all members', function () {
+        let result = new ItemEventList()
+            .addEvent ( new StatusChangedEvent ( 'id', 'work', new Date()))
+            .addEvent ( new StatusChangedEvent ( 'id', 'discover', new Date()))
+            .addEvent ( new StatusChangedEvent ( 'id', 'deliver', new Date()))
+            .addEvent ( new StatusChangedEvent ( 'id', 'done', new Date()))
+            .toReadableMiroList();
+
+        expect (result.split (",")).to.have.length ( 4 );
+    })
   });
 
 });
