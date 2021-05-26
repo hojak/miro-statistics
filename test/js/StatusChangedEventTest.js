@@ -1,6 +1,7 @@
 var assert = require('assert');
 
 const { expect } = require('chai');
+const { time } = require('console');
 const StatusChangedEvent = require('../../src/htdocs/js/StatusChangedEvent');
 
 describe('StatusChangedEvent', function() {
@@ -28,7 +29,7 @@ describe('StatusChangedEvent', function() {
   });
 
 
-  describe ('conflicts()', function () {
+  describe ('#conflicts()', function () {
     it ('has to be true for same id and status', function () {
       [
         [new StatusChangedEvent ( 'id', 'item', 10 ), new StatusChangedEvent('id', 'item', 100)],
@@ -48,6 +49,36 @@ describe('StatusChangedEvent', function() {
       ].forEach ( function ( pair ) {
         expect ( pair[0].conflicts(pair[1])).is.false;
       });
+    });
+  });
+
+
+  describe ('#readableMiroRepresentation', function () {
+    it ('has to contain status and timestamp', function () {
+      [
+        {'id': 'testid', 'status' : 'work', 'timestamp': new Date()}
+      ].forEach ( data => {
+        const newEvent = new StatusChangedEvent ( data['id'], data ['status'], data ['timestamp']);
+
+        expect ( newEvent.readableMiroRepresentation ).to.be.equal ( 
+          data['status'] + ": " + StatusChangedEvent.dateFormatter.format(data['timestamp'])
+        )
+      });
+    });
+  });
+
+
+  describe ('#createFromMiroString', function () {
+    it ('has to parse status and date', function () {
+      const timestamp = '2020-05-12 22:27';
+      const status = 'working';
+      const id = 'testid';
+
+      const testee = StatusChangedEvent.createFromMiroString ( status + ": " + timestamp, id);
+
+      expect ( testee.objectId ).to.be.equal ( id );
+      expect ( testee.newStatus).to.be.equal ( status );
+      expect ( StatusChangedEvent.dateFormatter.format ( testee.timestamp) ).to.be.equal ( timestamp);
     });
   });
 
