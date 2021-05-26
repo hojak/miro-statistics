@@ -35,10 +35,36 @@ describe('ItemEventList', function() {
 
         try {
             testee.addEvent ( 'test');
-            fail ()
+            fail ();
         } catch ( error ) {
-            expect ( error).equals ('IllegalArgument');
+            expect ( error).equals (ItemEventList.ERROR_NOT_AN_EVENT);
         }
+    });
+
+    it ( 'does not allow neighbors with same id and status', function () {
+        [
+            new ItemEventList ()
+                .addEvent ( new StatusChangedEvent ('id', 'new', 1))
+                .addEvent ( new StatusChangedEvent ('id', 'start', 10))
+                .addEvent ( new StatusChangedEvent ('id', 'work', 90))
+                .addEvent ( new StatusChangedEvent ('id', 'finished', 200)),
+            new ItemEventList ()
+                .addEvent ( new StatusChangedEvent ('id', 'new', 1))
+                .addEvent ( new StatusChangedEvent ('id', 'start', 10))
+                .addEvent ( new StatusChangedEvent ('id', 'work', 110))
+                .addEvent ( new StatusChangedEvent ('id', 'finished', 200)),
+
+        ].forEach( function ( preparedList ) {
+            try {
+                preparedList.addEvent ( new StatusChangedEvent ( "id", "work", 100 ));
+                console.log ( preparedList );
+                fail();
+            } catch ( error ) {
+                expect ( error ).is.equal(ItemEventList.ERROR_NEIGHBOR_CONFLICT);
+            }
+        });
+
+
     });
   });
 
@@ -50,9 +76,11 @@ describe('ItemEventList', function() {
         new ItemEventList(),
         new ItemEventList()
             .addEvent ( new StatusChangedEvent('id', 'new', 100))
-            .addEvent ( new StatusChangedEvent('id', 'new', 200))
-            .addEvent ( new StatusChangedEvent('id', 'new', 50))
-            .addEvent ( new StatusChangedEvent('id', 'new', 7))
+            .addEvent ( new StatusChangedEvent('id', 'start', 200))
+            .addEvent ( new StatusChangedEvent('id', 'work', 50))
+            .addEvent ( new StatusChangedEvent('id', 'finished', 7))
+            .addEvent ( new StatusChangedEvent('id', 'more work', 110))
+            .addEvent ( new StatusChangedEvent('id', 'started work', 90))
       ].forEach ( function ( preparedList ) {
         let lastItem = null;
         preparedList.getItems().forEach ( item => {
