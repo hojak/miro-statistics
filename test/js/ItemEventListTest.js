@@ -30,7 +30,6 @@ describe('ItemEventList', function() {
         });
     });
 
-
     it ('has to decline non StatusChangedEvent parameters', function () {
         const testee = new ItemEventList();
 
@@ -43,5 +42,27 @@ describe('ItemEventList', function() {
     });
   });
 
+
+  describe ('#getEvents()', function () {
+      it ('has to order events by increasing by timestamp', function () {
+
+      [
+        new ItemEventList(),
+        new ItemEventList()
+            .addEvent ( new StatusChangedEvent('id', 'new', 100))
+            .addEvent ( new StatusChangedEvent('id', 'new', 200))
+            .addEvent ( new StatusChangedEvent('id', 'new', 50))
+            .addEvent ( new StatusChangedEvent('id', 'new', 7))
+      ].forEach ( function ( preparedList ) {
+        let lastItem = null;
+        preparedList.getItems().forEach ( item => {
+            if ( lastItem ) {
+                expect ( item.getTimestamp() ).is.greaterThanOrEqual ( lastItem.getTimestamp());
+            }
+            lastItem = item;
+        })
+      });
+    });
+  });
 
 });
