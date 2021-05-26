@@ -28,4 +28,29 @@ describe('StatusChangedEvent', function() {
   });
 
 
+  describe ('conflicts()', function () {
+    it ('has to be true for same id and status', function () {
+      [
+        [new StatusChangedEvent ( 'id', 'item', 10 ), new StatusChangedEvent('id', 'item', 100)],
+        [new StatusChangedEvent ( 'id', 'item', 10 ), new StatusChangedEvent('id', 'item', 10)],
+        [new StatusChangedEvent ( '', 'item', 10 ), new StatusChangedEvent('', 'item', 100)],
+      ].forEach ( function ( pair) {
+        expect ( pair[0].conflicts(pair[1])).is.true;
+      });
+    });
+
+    it ( 'has to be false when id or status are different', function () {
+      [
+        [new StatusChangedEvent ( 'id', 'item', 10 ), new StatusChangedEvent('id', 'other item', 10)],
+        [new StatusChangedEvent ( 'id', 'item', 10 ), new StatusChangedEvent('other id', 'item', 10)],
+        [new StatusChangedEvent ( '', 'item', 10 ), new StatusChangedEvent('id', 'item', 100)],
+        [new StatusChangedEvent ( 'id', 'item', 10 ), new StatusChangedEvent('id', '', 100)],
+      ].forEach ( function ( pair ) {
+        expect ( pair[0].conflicts(pair[1])).is.false;
+      });
+    });
+  });
+
+
+
 });

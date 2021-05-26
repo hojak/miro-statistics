@@ -10,6 +10,18 @@ class StatusChangedEvent {
         return this.timestamp;
     }
 
+    conflicts ( otherEvent ) {
+        return otherEvent.getObjectId() == this.getObjectId() && otherEvent.getNewStatus() == this.getNewStatus();
+    }
+
+    getObjectId () {
+        return this.objectId;
+    }
+
+    getNewStatus () {
+        return this.newStatus;
+    }
+
 }
 
 module.exports = StatusChangedEvent;
