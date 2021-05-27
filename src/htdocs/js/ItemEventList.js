@@ -72,6 +72,11 @@ class ItemEventList {
 
     static createFromMiroString ( miroString, objectId ) {
         let result = new ItemEventList ();
+
+        if ( ! miroString || miroString.trim() == "" ) {
+            return result;
+        }
+
         miroString.split ( ",\n").map ( StatusChangedEvent.createFromMiroString ).forEach ( e => result.addEvent (e) );
 
         return result;

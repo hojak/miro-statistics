@@ -117,6 +117,10 @@ describe('ItemEventList', function() {
             ).to.be.equal ( stringRepresentation ); 
         });
     });
+
+    it ( 'has to generate an empty list', function () {
+        expect ( ItemEventList.createFromMiroString("").getSize()).to.be.equal(0);
+    });
   });
 
 
