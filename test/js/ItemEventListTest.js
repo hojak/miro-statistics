@@ -105,4 +105,20 @@ describe('ItemEventList', function() {
     })
   });
 
+
+  describe ('#createFromMiroString', function () {
+    it ('has to create a list', function () {
+        [
+            "work: 2021-07-10 10:00,\nactive: 2021-08-10 11:00",
+            "work: 2021-07-10 10:00,\nactive: 2021-08-10 11:00,\ndone: 2021-08-10 13:00"
+        ].forEach( stringRepresentation => {
+            expect(
+               ItemEventList.createFromMiroString (stringRepresentation,'someId').toReadableMiroList()
+            ).to.be.equal ( stringRepresentation ); 
+        });
+    });
+  });
+
+
+
 });

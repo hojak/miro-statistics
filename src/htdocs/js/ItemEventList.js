@@ -70,6 +70,13 @@ class ItemEventList {
             .join (",\n");
     }
 
+    static createFromMiroString ( miroString, objectId ) {
+        let result = new ItemEventList ();
+        miroString.split ( ",\n").map ( StatusChangedEvent.createFromMiroString ).forEach ( e => result.addEvent (e) );
+
+        return result;
+    }
+
 }
 
 module.exports = ItemEventList;
