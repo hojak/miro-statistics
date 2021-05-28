@@ -120,6 +120,15 @@ describe('ItemEventList', function() {
     it ( 'has to generate an empty list', function () {
         expect ( ItemEventList.createFromMiroString("").getSize()).to.be.equal(0);
     });
+
+    it ( 'has to use the object id for each event', function () {
+        const objectId = "objectId";
+        let testee = ItemEventList.createFromMiroString( "work: 2021-07-10 10:00,\nactive: 2021-08-10 11:00", objectId );
+
+        testee.getItems().forEach ( event => {
+            expect(event.objectId).to.be.equal ( objectId );
+        });
+    })
   });
 
 

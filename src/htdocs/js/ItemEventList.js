@@ -77,7 +77,7 @@ class ItemEventList {
             return result;
         }
 
-        miroString.split ( ",\n").map ( StatusChangedEvent.createFromMiroString ).forEach ( e => result.addEvent (e) );
+        miroString.split ( ",\n").map ( part => StatusChangedEvent.createFromMiroString(part, objectId) ).forEach ( e => result.addEvent (e) );
 
         return result;
     }
