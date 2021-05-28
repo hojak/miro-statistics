@@ -3,6 +3,7 @@ chai.use(require('chai-string'));
 const expect = chai.expect;
 
 const MiroTextHelper = require('../../src/htdocs/js/MiroTextHelper');
+const ItemEventList = require('../../src/htdocs/js/ItemEventList');
 
 describe('MiroTextHelper', function() {
     describe ( '#extractEventList', function () {
@@ -25,7 +26,31 @@ describe('MiroTextHelper', function() {
 
     });
 
+    describe('#registerStatusChange', function () {
+        it ( 'has to add a text representation at the end', function () {
+            const sometext = 'Lorem ipsum und so weiter';
+            const newStatus = 'work';
+            const obectId = 'someId';
+            const newText = MiroTextHelper.registerStatusChange ( sometext, "itemId", "work" );
+            expect ( newText  )
+                .to.startsWith ( sometext)
+                .and.to.contain( MiroTextHelper.START_EVENT_LIST)
+                .and.to.contain( MiroTextHelper.END_EVENT_LIST)
+                .and.to.contain( "work");
+        });
+    });
 
+    describe('#getEventlistRepresentation', function () {
+        it ( 'has to embed a list representation into the miro delimiters', function () {
+            [
+                "",
+                "work: 2020-01-10 01:15"
+            ].forEach ( listString => {
+                expect ( MiroTextHelper.getEventlistRepresentation( ItemEventList.createFromMiroString(listString)))
+                    .to.be.equal ( MiroTextHelper.START_EVENT_LIST + listString + MiroTextHelper.END_EVENT_LIST);
+            });
+        });
+    });
 });
 
 
