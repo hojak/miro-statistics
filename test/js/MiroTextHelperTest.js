@@ -4,6 +4,8 @@ const expect = chai.expect;
 
 const MiroTextHelper = require('../../src/htdocs/js/MiroTextHelper');
 const ItemEventList = require('../../src/htdocs/js/ItemEventList');
+const { fail, doesNotMatch } = require('assert');
+const StatusChangedEvent = require('../../src/htdocs/js/StatusChangedEvent');
 
 describe('MiroTextHelper', function() {
     describe ( '#extractEventList', function () {
@@ -17,11 +19,12 @@ describe('MiroTextHelper', function() {
                 + MiroTextHelper.START_EVENT_LIST + "work: 2020-10-01 17:00" + MiroTextHelper.END_EVENT_LIST
                 + "and some more text";
 
-            const extracted = MiroTextHelper.extractEventList(text);
+            const objectId = "objectId";
+            const extracted = MiroTextHelper.extractEventList(text, objectId);
             
             expect ( extracted.getSize()).to.be.equal(1);
             expect (extracted.getItems()[0].newStatus).to.be.equal ("work");
-
+            expect (extracted.getItems()[0].objectId).to.be.equal ( objectId);
         });
 
     });
@@ -37,6 +40,23 @@ describe('MiroTextHelper', function() {
                 .and.to.contain( MiroTextHelper.START_EVENT_LIST)
                 .and.to.contain( MiroTextHelper.END_EVENT_LIST)
                 .and.to.contain( "work");
+        });
+
+        it ( 'has to throw an error, if a status is added twice', function () {
+            const now = new Date();
+            const itemId = "itemId";
+            const preparredList = new ItemEventList()
+                .addEvent( new StatusChangedEvent(itemId, "selected", new Date( now.getTime() - 7200000)))
+                .addEvent( new StatusChangedEvent(itemId, "work", new Date( now.getTime() - 3600000)));
+            const before = "something before";
+            let prepared = MiroTextHelper.replaceEventList (before, preparredList);
+
+            try {
+                MiroTextHelper.registerStatusChange (prepared, itemId, "work");
+                fail ( "exception expected");
+            } catch ( error ) {
+                expect ( error ).to.be.equal ( ItemEventList.ERROR_NEIGHBOR_CONFLICT );
+            }
         });
     });
 
