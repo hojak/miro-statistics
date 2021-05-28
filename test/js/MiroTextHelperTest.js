@@ -51,6 +51,16 @@ describe('MiroTextHelper', function() {
             });
         });
     });
+
+
+    describe('#removeEventList', function () {
+        it ( 'has to remove the item list from the input', function () {
+            let before = "before";
+            let after = "after";
+            let testString = before + MiroTextHelper.START_EVENT_LIST + "some interesting to be removed" + MiroTextHelper.END_EVENT_LIST + after;
+            expect ( MiroTextHelper.removeEventList( testString)).to.be.equal ( before + after );
+        });
+    });
 });
 
 

@@ -28,7 +28,7 @@ module.exports = {
         const end = oldText.indexOf ( this.END_EVENT_LIST );
 
         if ( start > -1 && end > -1 ) {
-            return oldText.substr(0,start-1) + oldText.substr(end + this.END_EVENT_LIST.length+1);
+            return oldText.substr(0,start) + oldText.substr(end + this.END_EVENT_LIST.length);
         } else {
             return oldText;
         }
