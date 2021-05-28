@@ -57,7 +57,6 @@ describe('ItemEventList', function() {
         ].forEach( function ( preparedList ) {
             try {
                 preparedList.addEvent ( new StatusChangedEvent ( "id", "work", 100 ));
-                console.log ( preparedList );
                 fail();
             } catch ( error ) {
                 expect ( error ).is.equal(ItemEventList.ERROR_NEIGHBOR_CONFLICT);
@@ -122,7 +121,6 @@ describe('ItemEventList', function() {
         expect ( ItemEventList.createFromMiroString("").getSize()).to.be.equal(0);
     });
   });
-
 
 
 });

@@ -1,7 +1,6 @@
 var assert = require('assert');
 
 const { expect } = require('chai');
-const { time } = require('console');
 const StatusChangedEvent = require('../../src/htdocs/js/StatusChangedEvent');
 
 describe('StatusChangedEvent', function() {
