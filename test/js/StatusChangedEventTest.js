@@ -1,7 +1,7 @@
 var assert = require('assert');
 
 const { expect } = require('chai');
-const StatusChangedEvent = require('../../src/htdocs/js/StatusChangedEvent');
+const StatusChangedEvent = require('../../src/js/StatusChangedEvent');
 
 describe('StatusChangedEvent', function() {
   

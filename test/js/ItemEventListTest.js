@@ -2,8 +2,8 @@ const { fail, doesNotMatch } = require('assert');
 var assert = require('assert');
 
 const { expect } = require('chai');
-const ItemEventList = require('../../src/htdocs/js/ItemEventList');
-const StatusChangedEvent = require('../../src/htdocs/js/StatusChangedEvent');
+const ItemEventList = require('../../src/js/ItemEventList');
+const StatusChangedEvent = require('../../src/js/StatusChangedEvent');
 
 describe('ItemEventList', function() {
   

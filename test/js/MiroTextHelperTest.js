@@ -2,10 +2,10 @@ const chai = require('chai');
 chai.use(require('chai-string'));
 const expect = chai.expect;
 
-const MiroTextHelper = require('../../src/htdocs/js/MiroTextHelper');
-const ItemEventList = require('../../src/htdocs/js/ItemEventList');
+const MiroTextHelper = require('../../src/js/MiroTextHelper');
+const ItemEventList = require('../../src/js/ItemEventList');
 const { fail, doesNotMatch } = require('assert');
-const StatusChangedEvent = require('../../src/htdocs/js/StatusChangedEvent');
+const StatusChangedEvent = require('../../src/js/StatusChangedEvent');
 
 describe('MiroTextHelper', function() {
     describe ( '#extractEventList', function () {
