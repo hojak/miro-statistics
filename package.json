@@ -15,6 +15,7 @@
     "http-server": "latest",
     "htmllint": "latest",
     "chai": "latest",
+    "chai-string": "latest",
     "complexity-report-html": "latest",
     "eslint": "latest",
     "eslint-plugin-node": "latest",
