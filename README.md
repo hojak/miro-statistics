@@ -2,9 +2,15 @@
 
 ## Development
 
-### Todo
+### Todo-List
 
 - make `npm run lint` work
+- Describe running the app in README
+- Clarify first setup -> What do I need to do when I'm new to the project?
+  - 1) Create a miro Board in the miro App
+  - 2) In Miro Configuration -> Your Apps -> Local Testing App
+  - Important: Permissions
+- Change the "Hello" message on http://localhost:.../ to sth meaningful
 
 ### Build the Project
 
