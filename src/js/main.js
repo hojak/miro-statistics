@@ -10,6 +10,9 @@ miro.onReady(() => {
         const authorized = await miro.isAuthorized()
         
         if (authorized) {
+
+          initializeMetrics();
+
           return {
             title: 'Authorized example',
             svgIcon: icon,
@@ -30,6 +33,27 @@ miro.onReady(() => {
     },
   })
 })
+
+
+// todo: move !
+
+const SHAPE_MARKER_START = '[<';
+const SHAPE_MARKER_END = '>]';
+
+function initializeMetrics() {
+  miro.board.widgets.get({type: 'shape'}).then ( data => {
+    data
+      .filter ( shape => {
+        return shape.plainText.startsWith ( SHAPE_MARKER_START )
+          && shape.plainText.endsWith ( SHAPE_MARKER_END )
+      })
+      .map ( shape => shape.plainText.substring ( SHAPE_MARKER_START.length,shape.plainText.length- SHAPE_MARKER_END.length) )
+      .forEach (
+        // todo: initialize collision detection data structure 
+        text => console.log ( text )
+      );
+  })
+}
 
 
 
