@@ -45,7 +45,7 @@ function initializeMetrics() {
     console.log ( "---- Found Kanban Shapes ---");
     data
       .filter ( shape => MiroTextHelper.textIsShapeMarker ( shape.plainText ) )
-      .map ( shape => shape.plainText.substring ( SHAPE_MARKER_START.length,shape.plainText.length- SHAPE_MARKER_END.length) )
+      .map ( shape => MiroTextHelper.getShapeName ( shape.plainText ))
       .forEach (
         // todo: initialize collision detection data structure 
         text => console.log ( text )

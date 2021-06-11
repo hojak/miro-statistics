@@ -106,6 +106,26 @@ describe('MiroTextHelper', function() {
             ].forEach ( text => expect(MiroTextHelper.textIsShapeMarker ( text )).is.true)
         });
     })
+
+    describe ('#getShapeName', function () {
+        it ('has to return null, if not a shape marker string is given', function () {
+            [
+                'houiehro',
+                MiroTextHelper.START_SHAPE_MARKER + 'End is missing',
+            ].forEach ( input => {
+                expect ( MiroTextHelper.getShapeName ( input)).is.null
+            })
+        });
+
+        it ('has to extract the name', function () {
+            [
+                [MiroTextHelper.START_SHAPE_MARKER + 'shortname' + MiroTextHelper.END_SHAPE_MARKER, 'shortname'],
+                [MiroTextHelper.START_SHAPE_MARKER + 'longer name' + MiroTextHelper.END_SHAPE_MARKER, 'longer name'],
+            ].forEach ( pair => {
+                expect( MiroTextHelper.getShapeName(pair[0]) ).to.be.equal(pair[1])
+            })
+        });
+    })
 });
 
 

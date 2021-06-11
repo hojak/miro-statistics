@@ -58,6 +58,15 @@ module.exports = {
         text = text.trim();
         return text.startsWith ( this.START_SHAPE_MARKER )
             && text.endsWith ( this.END_SHAPE_MARKER )
-    }
+    },
+
+    getShapeName : function ( text ) {
+        text = text.trim();
+        if ( ! this.textIsShapeMarker ( text ) ) {
+            return null;
+        }
+
+        return text.substring ( this.START_SHAPE_MARKER.length, text.length - this.END_SHAPE_MARKER.length);
+    },
 
 }
