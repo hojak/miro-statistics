@@ -42,16 +42,15 @@ const SHAPE_MARKER_END = '>]';
 
 function initializeMetrics() {
   miro.board.widgets.get({type: 'shape'}).then ( data => {
+    console.log ( "---- Found Kanban Shapes ---");
     data
-      .filter ( shape => {
-        return shape.plainText.startsWith ( SHAPE_MARKER_START )
-          && shape.plainText.endsWith ( SHAPE_MARKER_END )
-      })
+      .filter ( shape => MiroTextHelper.textIsShapeMarker ( shape.plainText ) )
       .map ( shape => shape.plainText.substring ( SHAPE_MARKER_START.length,shape.plainText.length- SHAPE_MARKER_END.length) )
       .forEach (
         // todo: initialize collision detection data structure 
         text => console.log ( text )
       );
+    console.log ( "-----END----")
   })
 }
 

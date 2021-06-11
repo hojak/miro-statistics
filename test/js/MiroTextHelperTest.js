@@ -81,6 +81,31 @@ describe('MiroTextHelper', function() {
             expect ( MiroTextHelper.removeEventList( testString)).to.be.equal ( before + after );
         });
     });
+
+
+
+    describe('#textIsShapeMarker', function () {
+        it ('has to dismiss not matching texts', function () {
+            [
+                MiroTextHelper.START_SHAPE_MARKER + 'End is missing',
+                'start is missing' + MiroTextHelper.END_SHAPE_MARKER,
+                MiroTextHelper.START_SHAPE_MARKER + 'some text' + MiroTextHelper.END_SHAPE_MARKER + 'something at the end',
+                'something at the beginning ' + MiroTextHelper.START_SHAPE_MARKER + 'some text' + MiroTextHelper.END_SHAPE_MARKER,
+            ].forEach ( text => expect(MiroTextHelper.textIsShapeMarker ( text )).is.false)
+        });
+
+        it ( 'has to ignore whitespaces at start and end', function () {
+            [
+                " \n " + MiroTextHelper.START_SHAPE_MARKER + 'some text' + MiroTextHelper.END_SHAPE_MARKER + '  '
+            ].forEach ( text => expect(MiroTextHelper.textIsShapeMarker ( text )).is.true)
+        });
+
+        it ('has to match multiple words as names', function () {
+            [
+                MiroTextHelper.START_SHAPE_MARKER + 'longer name' + MiroTextHelper.END_SHAPE_MARKER
+            ].forEach ( text => expect(MiroTextHelper.textIsShapeMarker ( text )).is.true)
+        });
+    })
 });
 
 

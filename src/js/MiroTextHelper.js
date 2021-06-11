@@ -5,6 +5,9 @@ module.exports = {
     START_EVENT_LIST : "\n-------- START OF KANBAN EVENT LIST ---------\n",
     END_EVENT_LIST :   "\n--------  END OF KANBAN EVENT LIST  ---------\n",
 
+    START_SHAPE_MARKER : '[<',
+    END_SHAPE_MARKER : '>]',
+
     extractEventList : function ( string, objectId) {
         const start = string.indexOf ( this.START_EVENT_LIST );
         const end = string.indexOf ( this.END_EVENT_LIST );
@@ -49,6 +52,12 @@ module.exports = {
 
     getEventlistRepresentation : function ( eventList ) {
         return this.START_EVENT_LIST + eventList.toReadableMiroList() + this.END_EVENT_LIST;
+    },
+
+    textIsShapeMarker : function ( text ) {
+        text = text.trim();
+        return text.startsWith ( this.START_SHAPE_MARKER )
+            && text.endsWith ( this.END_SHAPE_MARKER )
     }
 
 }
