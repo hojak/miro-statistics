@@ -45,6 +45,14 @@ class KanbanTargetShapeList {
         return this;
     }
 
+    findMatchingShape ( point ) {
+        if ( ! ( point instanceof Point )) {
+            throw new TypeError ( "not a Point!");
+        }
+
+        return this.items.filter ( item => item.isInside ( point )) [0];        
+    }
+
     get Items () { return this.items; }
 
 }

@@ -40,8 +40,27 @@ describe('KanbanTargetShapeList', function() {
 
         it ( "has to reject non KanbanTargetShapes", function () {
             expect ( function (){
-                new KanbanTargetShapeList().addShape ( "test")
+                new KanbanTargetShapeList().addShape("test")
             }).to.throw ( TypeError);
         });
+    });
+
+
+    describe ( '#findMatchingShape', function () {
+
+        it ( "has to find the matchig shape", function () {
+            const testList = new KanbanTargetShapeList ([
+                new KanbanTargetShape ( "notMatchingID", "not matching Name", new Point (20,20), new Point (30,30)),
+                new KanbanTargetShape ( "matchingID", "matching Name", new Point (0,0), new Point (10,10))
+            ]);
+            expect ( testList.findMatchingShape ( new Point ( 5,5)).MiroID).to.be.equal ( 'matchingID');
+        });
+
+        it ( "has only to accept points", function () {
+            expect ( 
+                function () {new KanbanTargetShapeList().findMatchingShape( "hallo ")}
+            ).to.throw ( TypeError );
+        })
+
     });
 });
