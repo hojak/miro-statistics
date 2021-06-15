@@ -1,60 +1,60 @@
-const Point = require("./Point");
-const KanbanTargetShape = require ( "./KanbanTargetShape");
-const MiroTextHelper = require("./MiroTextHelper");
+/* global miro */
+
+const Point = require('./Point')
+const KanbanTargetShape = require('./KanbanTargetShape')
+const MiroTextHelper = require('./MiroTextHelper')
 
 class KanbanTargetShapeList {
+  static async createFromMiroBoard () {
+    return await miro.board.widgets.get({ type: 'shape' })
+      .then(data => new KanbanTargetShapeList(data
+        .filter(shape => MiroTextHelper.textIsShapeMarker(shape.plainText))
+        .map(shape => new KanbanTargetShape(
+          shape.id,
+          MiroTextHelper.getShapeName(shape.plainText),
+          new Point(shape.bounds.left, shape.bounds.top),
+          new Point(shape.bounds.right, shape.bounds.bottom)
+        )
+        )
+      )
+      )
+  }
 
-    static async createFromMiroBoard() {
-        return await miro.board.widgets.get({type: 'shape'})
-            .then ( data => new KanbanTargetShapeList(data
-                .filter ( shape => MiroTextHelper.textIsShapeMarker ( shape.plainText ) )
-                .map ( shape => new KanbanTargetShape(
-                                        shape.id,
-                                        MiroTextHelper.getShapeName ( shape.plainText ),
-                                        new Point( shape.bounds.left, shape.bounds.top ),
-                                        new Point( shape.bounds.right, shape.bounds.bottom )
-                                    )
-                        )
-                )
-            )
+  constructor (items) {
+    if (!items) {
+      items = []
+    }
+    if (!Array.isArray(items)) {
+      throw new TypeError('not an array but ' + typeof (items) + ' items: ' + items)
+    }
+    items.forEach(item => {
+      if (!(item instanceof KanbanTargetShape)) {
+        throw new TypeError('not a KanbanTargetShape')
+      }
+    })
+
+    this.items = items
+  }
+
+  addShape (shape) {
+    if (!(shape instanceof KanbanTargetShape)) {
+      throw new TypeError('not a KanbanTargetShape')
     }
 
-    constructor ( items ) {
-        if ( ! items ) {
-            items = [];
-        }
-        if ( ! Array.isArray ( items )) {
-            throw new TypeError ( "not an array but " + typeof(items) + " items: " + items);
-        }
-        items.forEach ( item => {
-            if ( ! ( item instanceof KanbanTargetShape )) {
-                throw new TypeError ( "not a KanbanTargetShape");
-            }
-        } );
+    this.items.push(shape)
 
-        this.items = items;
+    return this
+  }
+
+  findMatchingShape (point) {
+    if (!(point instanceof Point)) {
+      throw new TypeError('not a Point!')
     }
 
-    addShape (shape ) {
-        if ( ! ( shape instanceof KanbanTargetShape )) {
-            throw new TypeError ( "not a KanbanTargetShape");
-        }
+    return this.items.filter(item => item.isInside(point))[0]
+  }
 
-        this.items.push ( shape );
-
-        return this;
-    }
-
-    findMatchingShape ( point ) {
-        if ( ! ( point instanceof Point )) {
-            throw new TypeError ( "not a Point!");
-        }
-
-        return this.items.filter ( item => item.isInside ( point )) [0];        
-    }
-
-    get Items () { return this.items; }
-
+  get Items () { return this.items }
 }
 
-module.exports = KanbanTargetShapeList;
+module.exports = KanbanTargetShapeList
