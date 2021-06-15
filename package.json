@@ -1,10 +1,10 @@
 {
   "name": "igus-miro-kanban-statisics",
   "version": "0.1.0",
-  "description": "Tools for managing and analysinz our kanban board in miro",
+  "description": "Tools for managing and analysing our kanban board in miro",
   "homepage": "",
   "repository": "",
-  "license": "propietary",
+  "license": "proprietary",
   "private": "true",
   "email": "de-bauhaus@igus.net",
   "directories": {
