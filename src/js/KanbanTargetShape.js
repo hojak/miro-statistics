@@ -24,6 +24,11 @@ class KanbanTargetShape {
     get TopLeft() { return this.topLeft; }
 
     get BottomRight () { return this.bottomRight; }
+
+    isInside (point) {
+        return point.X >= this.topLeft.X && point.X <= this.bottomRight.X  
+            && point.Y >= this.topLeft.Y && point.Y <= this.bottomRight.Y
+    }
 }
 
 module.exports = KanbanTargetShape;

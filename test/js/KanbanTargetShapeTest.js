@@ -33,4 +33,35 @@ describe('KanbanTargetShape', function() {
         });
     });
 
+
+    describe ('#isInside', function () {
+
+        it ( "has to accept this points", function () {
+            const testee = new KanbanTargetShape ( "test", "test", new Point ( 5,5), new Point ( 20,20));
+            [
+                new Point ( 10, 10),
+                new Point ( 5, 10),
+                new Point ( 5, 20),
+                new Point ( 15,20),
+                new Point ( 20, 20)
+            ].forEach ( point => {
+                expect ( testee.isInside ( point)).to.be.true
+            });
+        });
+
+        it ( "has to reject this points", function () {
+            const testee = new KanbanTargetShape ( "test", "test", new Point ( 5,5), new Point ( 20,20));
+            [
+                new Point ( 5, 20.00001),
+                new Point ( -1, -1),
+                new Point ( 0, 0),
+                new Point ( 27,15),
+            ].forEach ( point => {
+                expect ( testee.isInside ( point)).to.be.false
+            });
+
+        });
+
+    });
+
 });
