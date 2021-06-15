@@ -40,5 +40,8 @@
     "complexity:src": "complexity-report-html src && mv .complexity-report/report.html .complexity-report/src.html",
     "complexity:test": "complexity-report-html test && mv .complexity-report/report.html .complexity-report/test.html",
     "complexity": "npm run complexity:src; npm run complexity:test"
+  },
+  "dependencies": {
+    "dayjs": "^1.10.5"
   }
 }

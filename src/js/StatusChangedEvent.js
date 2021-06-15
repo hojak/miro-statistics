@@ -1,13 +1,9 @@
+const dayjs = require("../../node_modules/dayjs/dayjs.min");
+
 class StatusChangedEvent {
 
-    static get dateFormatter() {
-        let options = {
-            year: 'numeric', month: '2-digit', day: '2-digit',
-            hour: '2-digit', minute: '2-digit', 
-            hour12: false,
-            timeStyle: 'short'
-        };
-        return  new Intl.DateTimeFormat ( 'de-DE', options );
+    static formatTimeStamp(timestamp) {
+        return dayjs(timestamp).format('YYYY-MM-DD HH:mm')
     }
 
     constructor ( objectId, newStatus, timestamp = null ) {
@@ -37,7 +33,7 @@ class StatusChangedEvent {
     get newStatus() { return this._newStatus; }
 
     get readableMiroRepresentation () {
-        return this.newStatus + ": " + StatusChangedEvent.dateFormatter.format ( this.timestamp );
+        return this.newStatus + ": " + StatusChangedEvent.formatTimeStamp ( this.timestamp );
     }
 
     static createFromMiroString ( miroString, objectId ) {

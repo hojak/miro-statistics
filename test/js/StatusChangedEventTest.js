@@ -60,7 +60,7 @@ describe('StatusChangedEvent', function() {
         const newEvent = new StatusChangedEvent ( data['id'], data ['status'], data ['timestamp']);
 
         expect ( newEvent.readableMiroRepresentation ).to.be.equal ( 
-          data['status'] + ": " + StatusChangedEvent.dateFormatter.format(data['timestamp'])
+          data['status'] + ": " + StatusChangedEvent.formatTimeStamp (data['timestamp'])
         )
       });
     });
@@ -77,7 +77,7 @@ describe('StatusChangedEvent', function() {
 
       expect ( testee.objectId ).to.be.equal ( id );
       expect ( testee.newStatus).to.be.equal ( status );
-      expect ( StatusChangedEvent.dateFormatter.format ( testee.timestamp) ).to.be.equal ( timestamp);
+      expect ( StatusChangedEvent.formatTimeStamp ( testee.timestamp) ).to.be.equal ( timestamp);
     });
   });
 
