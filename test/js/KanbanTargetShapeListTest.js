@@ -57,5 +57,13 @@ describe('KanbanTargetShapeList', function () {
         function () { new KanbanTargetShapeList().findMatchingShape('hallo ') }
       ).to.throw(TypeError)
     })
+
+    it ( 'has to return null if not matching shape is present', function () {
+      const testList = new KanbanTargetShapeList([
+        new KanbanTargetShape('notMatchingID', 'not matching Name', new Point(20, 20), new Point(30, 30)),
+        new KanbanTargetShape('matchingID', 'matching Name', new Point(0, 0), new Point(10, 10))
+      ]);
+      expect ( testList.findMatchingShape ( new Point ( 100,100)).to.be.null);
+    })
   })
 })
