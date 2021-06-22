@@ -20,7 +20,7 @@ class MiroKanbanController {
             const authorized = await $this.miro.isAuthorized()
 
             if (authorized) {
-              this.initializeMetrics()
+              this.initializeKanbanShapes()
 
               this.registerEventHandler()
 
@@ -46,10 +46,11 @@ class MiroKanbanController {
     })
   }
 
-  initializeMetrics () {
+  initializeKanbanShapes () {
+    const $this = this
     KanbanTargetShapeList.createFromMiroBoard()
       .then(shapes => {
-        console.log(shapes)
+        $this.kanbanShapes = shapes
       })
   }
 
