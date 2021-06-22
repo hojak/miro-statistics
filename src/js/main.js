@@ -45,9 +45,13 @@ function initializeMetrics () {
 }
 
 function registerEventHandler() {
-  miro.addListener(miro.enums.event.WIDGETS_TRANSFORMATION_UPDATED, function ( eventData ) { 
-    if ( eventData.data[0].type == "CARD") {
-      console.log( eventData )
+  miro.addListener(miro.enums.event.WIDGETS_TRANSFORMATION_UPDATED, function ( event ) { 
+    eventSubject = event.data[0]
+    if ( eventSubject.type == "CARD") {
+      miro.board.widgets.get({'id': eventSubject.id})
+        .then(cardWidget => {
+          console.log( cardWidget )
+        })
     }
   } )
 }
