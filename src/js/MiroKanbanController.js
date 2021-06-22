@@ -1,6 +1,7 @@
 /* global alert */
 
 const KanbanTargetShapeList = require('./KanbanTargetShapeList')
+const Point = require('./Poing')
 
 const icon = '<circle cx="12" cy="12" r="9" fill="none" fill-rule="evenodd" stroke="currentColor" stroke-width="2"></circle>'
 
@@ -73,7 +74,11 @@ class MiroKanbanController {
   }
 
   handleTranformedCardWidget (cardWidgetData) {
-    console.log(cardWidgetData)
+    const kanbanShape = this.kanbanShapes.findMatchingShape(new Point(cardWidgetData[0].bounds.x, cardWidgetData[0].bounds.y))
+
+    if (kanbanShape) {
+      console.log('Yeah - hit shape ' + kanbanShape.miroId)
+    }
   }
 
   handleButtonClick () {
