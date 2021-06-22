@@ -1,7 +1,8 @@
 /* global alert */
 
 const KanbanTargetShapeList = require('./KanbanTargetShapeList')
-const Point = require('./Poing')
+const MiroTextHelper = require('./MiroTextHelper')
+const Point = require('./Point')
 
 const icon = '<circle cx="12" cy="12" r="9" fill="none" fill-rule="evenodd" stroke="currentColor" stroke-width="2"></circle>'
 
@@ -77,8 +78,19 @@ class MiroKanbanController {
     const kanbanShape = this.kanbanShapes.findMatchingShape(new Point(cardWidgetData[0].bounds.x, cardWidgetData[0].bounds.y))
 
     if (kanbanShape) {
-      console.log('Yeah - hit shape ' + kanbanShape.miroId)
+      this.updateKanbanMetrics(cardWidgetData, kanbanShape)
     }
+  }
+
+  updateKanbanMetrics (cardWidgetData, kanbanShape) {
+    this.miro.board.widgets.update([{
+      id: cardWidgetData[0].id,
+      description: MiroTextHelper.registerStatusChange(
+        cardWidgetData[0].description,
+        cardWidgetData[0].id,
+        kanbanShape.name
+      )
+    }]).then(data => console.log(data))
   }
 
   handleButtonClick () {
