@@ -14,6 +14,8 @@ miro.onReady(() => {
         if (authorized) {
           initializeMetrics()
 
+          registerEventHandler()
+
           return {
             title: 'Authorized example',
             svgIcon: icon,
@@ -40,6 +42,14 @@ function initializeMetrics () {
     .then(shapes => {
       console.log(shapes)
     })
+}
+
+function registerEventHandler() {
+  miro.addListener(miro.enums.event.WIDGETS_TRANSFORMATION_UPDATED, function ( eventData ) { 
+    if ( eventData.data[0].type == "CARD") {
+      console.log( eventData )
+    }
+  } )
 }
 
 function sayHi () {
