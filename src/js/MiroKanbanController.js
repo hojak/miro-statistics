@@ -8,43 +8,49 @@ const icon = '<circle cx="12" cy="12" r="9" fill="none" fill-rule="evenodd" stro
 
 class MiroKanbanController {
   constructor (miro) {
+    const $this = this
     this.miro = miro
+
+    this.requireAuth(
+      () => $this.registerMiroTools()
+    )
 
     this.initializeMiroHandlers()
   }
 
-  initializeMiroHandlers () {
+  async requireAuth (afterWards) {
     const $this = this
-    this.miro.onReady(() => {
-      $this.miro.initialize({
-        extensionPoints: {
-          bottomBar: async () => {
-            const authorized = await $this.miro.isAuthorized()
+    $this.miro.onReady(async () => {
+      const authorized = await $this.miro.isAuthorized()
 
-            if (authorized) {
-              this.initializeKanbanShapes()
+      if (authorized) {
+        return afterWards()
+      } else {
+        return $this.miro.authorize({
+          response_type: 'code'
+        }).then(() => {
+          return afterWards()
+        })
+      }
+    })
+  }
 
-              this.registerEventHandler()
+  async registerMiroTools () {
+    const $this = this
 
-              return {
-                title: 'Authorized example',
-                svgIcon: icon,
-                onClick: this.handleButtonClick
-              }
-            } else {
-              return $this.miro.authorize({
-                response_type: 'code'
-              }).then(() => {
-                return {
-                  title: 'Authorized example',
-                  svgIcon: icon,
-                  onClick: this.handleButtonClick
-                }
-              })
-            }
+    $this.initializeKanbanShapes()
+    $this.registerEventHandler()
+
+    $this.miro.initialize({
+      extensionPoints: {
+        bottomBar: async () => {
+          return {
+            title: 'Kanban Metrics WebApp',
+            svgIcon: icon,
+            onClick: $this.handleButtonClick
           }
         }
-      })
+      }
     })
   }
 
