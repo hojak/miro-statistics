@@ -63,7 +63,8 @@ describe('KanbanTargetShapeList', function () {
         new KanbanTargetShape('notMatchingID', 'not matching Name', new Point(20, 20), new Point(30, 30)),
         new KanbanTargetShape('matchingID', 'matching Name', new Point(0, 0), new Point(10, 10))
       ])
-      expect(testList.findMatchingShape(new Point(100, 100))).to.be.undefined
+
+      expect(testList.findMatchingShape(new Point(100, 100))).to.be.equal(undefined)
     })
   })
 })
