@@ -16,6 +16,20 @@ describe('MiroTextHelper', function () {
     it('should extract a simple list from the middle', function () {
       const text =
                 'lorem impsum und so weiter\n\n' +
+                MiroTextHelper.START_EVENT_LIST + '<p>work: 2020-10-01 17:00</p>' + MiroTextHelper.END_EVENT_LIST +
+                'and some more text'
+
+      const objectId = 'objectId'
+      const extracted = MiroTextHelper.extractEventList(text, objectId)
+
+      expect(extracted.getSize()).to.be.equal(1)
+      expect(extracted.getItems()[0].newStatus).to.be.equal('work')
+      expect(extracted.getItems()[0].objectId).to.be.equal(objectId)
+    })
+
+    it('has to ignore missing enclosing p tag in the event list', function () {
+      const text =
+                'lorem impsum und so weiter\n\n' +
                 MiroTextHelper.START_EVENT_LIST + 'work: 2020-10-01 17:00' + MiroTextHelper.END_EVENT_LIST +
                 'and some more text'
 
@@ -30,13 +44,26 @@ describe('MiroTextHelper', function () {
 
   describe('#registerStatusChange', function () {
     it('has to add a text representation at the end', function () {
-      const sometext = 'Lorem ipsum und so weiter'
+      const sometext = 'Lorem ipsum und so weiter\n</p>'
       const newText = MiroTextHelper.registerStatusChange(sometext, 'itemId', 'work')
       expect(newText)
         .to.startsWith(sometext)
         .and.to.contain(MiroTextHelper.START_EVENT_LIST)
         .and.to.contain(MiroTextHelper.END_EVENT_LIST)
         .and.to.contain('work')
+    })
+
+    it('has to add an event at the end of the list', function () {
+      const sometext = 'Lorem ipsum und so weiter\n</p>'
+      const interMediate = MiroTextHelper.registerStatusChange(sometext, 'itemId', 'work')
+      const newText = MiroTextHelper.registerStatusChange(interMediate, 'itemId', 'done')
+      expect(newText)
+        .to.startsWith(sometext)
+        .and.to.contain(MiroTextHelper.START_EVENT_LIST)
+        .and.to.contain(MiroTextHelper.END_EVENT_LIST)
+        .and.to.contain('work')
+
+      console.log('newText: ' + newText)
     })
 
     it('has to throw an error, if a status is added twice', function () {
@@ -55,13 +82,25 @@ describe('MiroTextHelper', function () {
         expect(error).to.be.equal(ItemEventList.ERROR_NEIGHBOR_CONFLICT)
       }
     })
+
+
+    it('has to leave the text at the beginning and the end', function () {
+      const beginning = 'some wise word at the beginning</p>'
+      const theEnd = '<p>and realy meaningful words at the end</p>'
+
+      const intermediate = MiroTextHelper.registerStatusChange (beginning, 'someId', 'start work') + theEnd;
+
+      expect ( MiroTextHelper.registerStatusChange(intermediate, 'someId', 'done'))
+        .to.startWith ( beginning)
+        .and.to.endWith (theEnd )
+    })
   })
 
   describe('#getEventlistRepresentation', function () {
     it('has to embed a list representation into the miro delimiters', function () {
       [
-        '',
-        'work: 2020-01-10 01:15'
+        '<p></p>',
+        '<p>work: 2020-01-10 01:15</p>'
       ].forEach(listString => {
         expect(MiroTextHelper.getEventlistRepresentation(ItemEventList.createFromMiroString(listString)))
           .to.be.equal(MiroTextHelper.START_EVENT_LIST + listString + MiroTextHelper.END_EVENT_LIST)

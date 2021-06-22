@@ -30,12 +30,10 @@ describe('ItemEventList', function () {
     it('has to decline non StatusChangedEvent parameters', function () {
       const testee = new ItemEventList()
 
-      try {
-        testee.addEvent('test')
-        fail()
-      } catch (error) {
-        expect(error).equals(ItemEventList.ERROR_NOT_AN_EVENT)
-      }
+      expect ( () => testee.addEvent('test') )
+        .to.throw(Error)
+        // todo: check error message
+        //.withErrorMessage (ItemEventList.ERROR_NOT_AN_EVENT)
     })
 
     it('does not allow neighbors with same id and status', function () {
@@ -101,8 +99,8 @@ describe('ItemEventList', function () {
   describe('#createFromMiroString', function () {
     it('has to create a list', function () {
       [
-        'work: 2021-07-10 10:00,\nactive: 2021-08-10 11:00',
-        'work: 2021-07-10 10:00,\nactive: 2021-08-10 11:00,\ndone: 2021-08-10 13:00'
+        '<p>work: 2021-07-10 10:00,</p><p>active: 2021-08-10 11:00</p>',
+        '<p>work: 2021-07-10 10:00,</p><p>active: 2021-08-10 11:00,</p><p>done: 2021-08-10 13:00</p>'
       ].forEach(stringRepresentation => {
         expect(
           ItemEventList.createFromMiroString(stringRepresentation, 'someId').toReadableMiroList()

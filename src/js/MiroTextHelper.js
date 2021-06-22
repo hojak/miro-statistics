@@ -2,8 +2,8 @@ const ItemEventList = require('./ItemEventList')
 const StatusChangedEvent = require('./StatusChangedEvent')
 
 module.exports = {
-  START_EVENT_LIST: '\n-------- START OF KANBAN EVENT LIST ---------\n',
-  END_EVENT_LIST: '\n--------  END OF KANBAN EVENT LIST  ---------\n',
+  START_EVENT_LIST: '<p>-------- START OF KANBAN EVENT LIST ---------</p>',
+  END_EVENT_LIST: '<p>--------  END OF KANBAN EVENT LIST  ---------</p>',
 
   START_SHAPE_MARKER: '[<',
   END_SHAPE_MARKER: '>]',
@@ -42,9 +42,9 @@ module.exports = {
     const end = text.indexOf(this.END_EVENT_LIST)
 
     if (start > -1 && end > -1) {
-      return text.substr(0, start - 1) +
+      return text.substr(0, start) +
                 this.getEventlistRepresentation(newList) +
-                text.substr(end + this.END_EVENT_LIST.length + 1)
+                text.substr(end-1 + this.END_EVENT_LIST.length + 1)
     } else {
       return text + this.getEventlistRepresentation(newList)
     }
