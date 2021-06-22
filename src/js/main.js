@@ -19,7 +19,7 @@ miro.onReady(() => {
           return {
             title: 'Authorized example',
             svgIcon: icon,
-            onClick: sayHi
+            onClick: handleButtonClick
           }
         } else {
           return miro.authorize({
@@ -56,7 +56,6 @@ function registerEventHandler() {
   } )
 }
 
-function sayHi () {
-  miro.board.widgets.create({ type: 'sticker', text: 'whatever we want' })
-  alert('Hi!')
+function handleButtonClick () {
+  alert('Bauhaus kanban metrics app. - Create a shape with a [<name>], move cards over it and enjoy the magic!')
 }
