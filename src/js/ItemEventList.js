@@ -15,7 +15,7 @@ class ItemEventList {
 
   addEvent (newEvent) {
     if (!(newEvent instanceof StatusChangedEvent)) {
-      throw new Error ( ItemEventList.ERROR_NOT_AN_EVENT )
+      throw new Error(ItemEventList.ERROR_NOT_AN_EVENT)
     }
 
     const newPosition = this.findInsertPosition(newEvent)
@@ -63,27 +63,27 @@ class ItemEventList {
   }
 
   toReadableMiroList () {
-    return '<p>' + 
+    return '<p>' +
       this.items
-      .map(item => item.readableMiroRepresentation)
-      .join(ItemEventList.EVENT_SEPARATOR)
-      + '</p>'
-    }
+        .map(item => item.readableMiroRepresentation)
+        .join(ItemEventList.EVENT_SEPARATOR) +
+      '</p>'
+  }
 
   static createFromMiroString (miroString, objectId) {
     const result = new ItemEventList()
 
-    if (!miroString ) {
+    if (!miroString) {
       return result
     }
-    if ( miroString.startsWith ( '<p>')) {
-      miroString = miroString.substr ( 3 );
+    if (miroString.startsWith('<p>')) {
+      miroString = miroString.substr(3)
     }
-    if ( miroString.endsWith ( '</p>')) {
-      miroString = miroString.substr ( 0, miroString.length - 4)
+    if (miroString.endsWith('</p>')) {
+      miroString = miroString.substr(0, miroString.length - 4)
     }
-    if ( miroString.trim() === '' ) {
-      return result 
+    if (miroString.trim() === '') {
+      return result
     }
 
     miroString.split(ItemEventList.EVENT_SEPARATOR).map(part => StatusChangedEvent.createFromMiroString(part, objectId)).forEach(e => result.addEvent(e))

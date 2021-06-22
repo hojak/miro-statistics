@@ -62,8 +62,6 @@ describe('MiroTextHelper', function () {
         .and.to.contain(MiroTextHelper.START_EVENT_LIST)
         .and.to.contain(MiroTextHelper.END_EVENT_LIST)
         .and.to.contain('work')
-
-      console.log('newText: ' + newText)
     })
 
     it('has to throw an error, if a status is added twice', function () {
@@ -83,16 +81,15 @@ describe('MiroTextHelper', function () {
       }
     })
 
-
     it('has to leave the text at the beginning and the end', function () {
       const beginning = 'some wise word at the beginning</p>'
       const theEnd = '<p>and realy meaningful words at the end</p>'
 
-      const intermediate = MiroTextHelper.registerStatusChange (beginning, 'someId', 'start work') + theEnd;
+      const intermediate = MiroTextHelper.registerStatusChange(beginning, 'someId', 'start work') + theEnd
 
-      expect ( MiroTextHelper.registerStatusChange(intermediate, 'someId', 'done'))
-        .to.startWith ( beginning)
-        .and.to.endWith (theEnd )
+      expect(MiroTextHelper.registerStatusChange(intermediate, 'someId', 'done'))
+        .to.startWith(beginning)
+        .and.to.endWith(theEnd)
     })
   })
 

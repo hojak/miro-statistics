@@ -44,7 +44,7 @@ module.exports = {
     if (start > -1 && end > -1) {
       return text.substr(0, start) +
                 this.getEventlistRepresentation(newList) +
-                text.substr(end-1 + this.END_EVENT_LIST.length + 1)
+                text.substr(end - 1 + this.END_EVENT_LIST.length + 1)
     } else {
       return text + this.getEventlistRepresentation(newList)
     }

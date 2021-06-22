@@ -30,10 +30,10 @@ describe('ItemEventList', function () {
     it('has to decline non StatusChangedEvent parameters', function () {
       const testee = new ItemEventList()
 
-      expect ( () => testee.addEvent('test') )
+      expect(() => testee.addEvent('test'))
         .to.throw(Error)
         // todo: check error message
-        //.withErrorMessage (ItemEventList.ERROR_NOT_AN_EVENT)
+        // .withErrorMessage (ItemEventList.ERROR_NOT_AN_EVENT)
     })
 
     it('does not allow neighbors with same id and status', function () {
