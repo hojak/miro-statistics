@@ -56,15 +56,24 @@ class MiroKanbanController {
 
   registerEventHandler () {
     const $this = this
-    $this.miro.addListener($this.miro.enums.event.WIDGETS_TRANSFORMATION_UPDATED, function (event) {
-      const eventSubject = event.data[0]
-      if (eventSubject.type === 'CARD') {
-        $this.miro.board.widgets.get({ id: eventSubject.id })
-          .then(cardWidget => {
-            console.log(cardWidget)
-          })
-      }
-    })
+    $this.miro.addListener(
+      $this.miro.enums.event.WIDGETS_TRANSFORMATION_UPDATED,
+      event => $this.miroTranformationListener(event)
+    )
+  }
+
+  miroTranformationListener (event) {
+    const $this = this
+
+    const eventSubject = event.data[0]
+    if (eventSubject.type === 'CARD') {
+      $this.miro.board.widgets.get({ id: eventSubject.id })
+        .then(cardWidget => $this.handleTranformedCardWidget(cardWidget))
+    }
+  }
+
+  handleTranformedCardWidget (cardWidgetData) {
+    console.log(cardWidgetData)
   }
 
   handleButtonClick () {
