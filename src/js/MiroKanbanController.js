@@ -6,7 +6,7 @@ const Point = require('./Point')
 
 const icon = '<rect style="fill:none;stroke:#000000;stroke-width:0.1" x="1" y="1" height="20" width="6" />' +
   '<rect style="fill:#000000;stroke:#000000;stroke-width:0.001" x="8" y="1" height="14" width="6" />' +
-  '<rect style="fill:none;stroke:#000000;stroke-width:0.1" x="15" y="1" height="17" width="6" />';
+  '<rect style="fill:none;stroke:#000000;stroke-width:0.1" x="15" y="1" height="17" width="6" />'
 
 class MiroKanbanController {
   constructor (miro) {
