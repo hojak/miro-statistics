@@ -16,8 +16,6 @@ class MiroKanbanController {
     this.requireAuth(
       () => $this.registerMiroTools()
     )
-
-    this.initializeMiroHandlers()
   }
 
   async requireAuth (afterWards) {
