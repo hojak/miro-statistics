@@ -21,10 +21,22 @@ npm run test
 npm run lint
 ```
 
-To run the application
+
+### Run a Local Version
+Provida a the application on a simple local webserver
 
 ```sh
 npm run local
+```
+
+Afterwarts, the result is available at the address http://localhost:8081
+
+
+### Testing
+
+To run all tests once simply state 
+```sh
+npm run test
 ```
 
 To continuously monitor the tests while developing
@@ -32,6 +44,8 @@ To continuously monitor the tests while developing
 ```sh
 npm run test:watch
 ```
+
+### Linter and Code Style
 
 Before pushing to github, please run all tests and the linter
 
@@ -50,3 +64,18 @@ The command above uses the [complexity-report-html](https://github.com/igneel64/
 
 - `.complexity-report/app.html` shows an overview of complexity by file and function for the `app` folder
 - `.complexity-report/test.html` shows an overview of complexity by file and function for the `test` folder
+
+
+### Hint for Developers Using Windows
+
+If you're using windows and git bash, you might run into the problem, that the build script creates a directory "-p" in your local repository instead of working directly.
+
+The root cause of the problem is, that npm scripts are run in the default shell, which is usualle the windows command prompt.
+
+You can change this by configuring npm to use a different shell, e.g. the git bash:
+
+```
+npm config set script-shell "C:\\Program Files\\Git\\bin\\bash.exe"
+```
+
+*By the way, you can remove this directory by using ```rmdir ./-p``` - but you got this covered already, didn't you?*
