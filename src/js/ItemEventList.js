@@ -49,7 +49,7 @@ class ItemEventList {
       throw ItemEventList.ERROR_NEIGHBOR_CONFLICT
     }
 
-    if (newPosition > 1 && newEvent.conflicts(this.items[newPosition - 1])) {
+    if (newPosition >= 1 && newEvent.conflicts(this.items[newPosition - 1])) {
       throw ItemEventList.ERROR_NEIGHBOR_CONFLICT
     }
   }
