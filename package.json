@@ -33,7 +33,7 @@
     "bundle": "mkdir -p out/htdocs/js && browserify src/js/main.js -o out/htdocs/js/mirotools.js",
     "build": "npm run copy && npm run bundle",
     "clean": "rm -rf out",
-    "local": "npm run build && http-server out/htdocs -c-1 -p 8081",
+    "local": "npm run build && http-server out/htdocs -c-1 -p 8088",
     "lint": "npm run lint:js && npm run lint:html",
     "lint:js": "eslint src/js/*.js test/js/*.js",
     "lint:jsfix": "eslint --fix src/js/*.js test/js/*.js",

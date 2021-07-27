@@ -1,5 +1,3 @@
-/* global alert */
-
 const KanbanTargetShapeList = require('./KanbanTargetShapeList')
 const MiroTextHelper = require('./MiroTextHelper')
 const Point = require('./Point')
@@ -13,30 +11,25 @@ class MiroKanbanController {
     const $this = this
     this.miro = miro
 
-    this.requireAuth(
-      () => $this.registerMiroTools()
-    )
+    $this.miro.onReady(() => {
+      $this.registerMiroTools()
+    })
   }
 
-  async requireAuth (afterWards) {
+  async checkAuthorization () {
     const $this = this
-    $this.miro.onReady(async () => {
-      const authorized = await $this.miro.isAuthorized()
+    const isAuthorized = await $this.miro.isAuthorized()
 
-      if (authorized) {
-        return afterWards()
-      } else {
-        return $this.miro.authorize({
-          response_type: 'code'
-        }).then(() => {
-          return afterWards()
-        })
-      }
-    })
+    if (!isAuthorized) {
+      // Ask the user to authorize the app.
+      await $this.miro.requestAuthorization()
+    }
   }
 
   async registerMiroTools () {
     const $this = this
+
+    await $this.checkAuthorization()
 
     $this.initializeKanbanShapes()
     $this.registerEventHandler()
@@ -47,7 +40,7 @@ class MiroKanbanController {
           return {
             title: 'Kanban Metrics WebApp',
             svgIcon: icon,
-            onClick: $this.handleButtonClick
+            onClick: () => $this.openSidebar()
           }
         }
       }
@@ -99,8 +92,9 @@ class MiroKanbanController {
     }]).then(data => console.log(data))
   }
 
-  handleButtonClick () {
-    alert('Bauhaus kanban metrics app. - Create a shape with a [<name>], move cards over it and enjoy the magic!')
+  async openSidebar () {
+    const $this = this
+    $this.miro.board.ui.openLeftSidebar('sidebar.html')
   }
 }
 
