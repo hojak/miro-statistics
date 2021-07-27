@@ -49,9 +49,9 @@ describe('ItemEventList', function () {
           .addEvent(new StatusChangedEvent('id', 'work', 110))
           .addEvent(new StatusChangedEvent('id', 'finished', 200)),
         new ItemEventList()
-          .addEvent ( new StatusChangedEvent('id', 'work', 50)),
+          .addEvent(new StatusChangedEvent('id', 'work', 50)),
         new ItemEventList()
-          .addEvent ( new StatusChangedEvent('id', 'work', 150))
+          .addEvent(new StatusChangedEvent('id', 'work', 150))
 
       ].forEach(function (preparedList) {
         try {
