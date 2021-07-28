@@ -28,7 +28,12 @@ class StatusChangedEvent {
   }
 
   toCSV () {
-    return this._objectId + ';' + this._newStatus + ';' + this._timestamp + ';\n'
+    return this._objectId + ';' +
+      this._newStatus + ';' +
+      this._timestamp + ';' +
+      new Date(this._timestamp).toLocaleDateString() + ';' +
+      new Date(this._timestamp).toLocaleTimeString() + ';' +
+      '\n'
   }
 
   get timestamp () { return this._timestamp }
