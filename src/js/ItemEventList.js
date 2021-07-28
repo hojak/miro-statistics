@@ -70,6 +70,10 @@ class ItemEventList {
       '</p>'
   }
 
+  toCSV () {
+    return this.items.map(item => item.toCSV()).join('')
+  }
+
   static createFromMiroString (miroString, objectId) {
     const result = new ItemEventList()
 
