@@ -23,7 +23,7 @@ npm run lint
 
 
 ### Run a Local Version
-Provida a the application on a simple local webserver
+Provide a the application on a simple local web server
 
 ```sh
 npm run local
@@ -70,7 +70,7 @@ The command above uses the [complexity-report-html](https://github.com/igneel64/
 
 If you're using windows and git bash, you might run into the problem, that the build script creates a directory "-p" in your local repository instead of working directly.
 
-The root cause of the problem is, that npm scripts are run in the default shell, which is usualle the windows command prompt.
+The root cause of the problem is, that npm scripts are run in the default shell, which is usually the windows command prompt.
 
 You can change this by configuring npm to use a different shell, e.g. the git bash:
 
