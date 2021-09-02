@@ -12,7 +12,7 @@ class MiroKanbanController {
         cardWidgetData[0].id,
         kanbanShape.name
       )
-    }]).then(data => console.log(data))
+    }])
   }
 
   async getCsvData () {
