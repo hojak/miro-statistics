@@ -15,17 +15,17 @@
     "chai": "latest",
     "chai-string": "latest",
     "complexity-report-html": "latest",
-    "eslint": "^7.29.0",
+    "eslint": "^7.32.0",
     "eslint-config-standard": "^16.0.3",
-    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-mocha": "^9.0.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.0",
     "htmllint": "latest",
-    "http-server": "latest",
+    "http-server": "^13.0.1",
     "mocha": "latest",
     "nyc": "latest",
-    "sinon": "^11.1.1",
+    "sinon": "^11.1.2",
     "sinon-chai": "latest"
   },
   "scripts": {
@@ -46,6 +46,6 @@
     "complexity": "npm run complexity:src; npm run complexity:test"
   },
   "dependencies": {
-    "dayjs": "^1.10.5"
+    "dayjs": "^1.10.6"
   }
 }
