@@ -75,12 +75,12 @@ class MiroMainRegistrator {
 
   miroTranformationListener (event) {
     const $this = this
-    event.data.forEach ( eventSubject => {
+    event.data.forEach(eventSubject => {
       if (eventSubject.type === 'CARD') {
         $this.miro.board.widgets.get({ id: eventSubject.id })
           .then(cardWidget => $this.handleTranformedCardWidget(cardWidget))
       }
-    });
+    })
   }
 
   handleTranformedCardWidget (cardWidgetData) {
