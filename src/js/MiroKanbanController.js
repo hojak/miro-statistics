@@ -24,13 +24,21 @@ class MiroKanbanController {
             .map(eventList => eventList.toCSV())
             .join('') +
           '\n\n\n\ncardId;title;\n' +
-          data.map(card => card.id + ';' + $this.removeParagraph(card.title) + ';\n').join('')
+          data.map(card => card.id + ';' + $this.removeHtml(card.title) + ';'
+        ).join('\n')
       }
       )
   }
 
-  removeParagraph (text) {
-    return text.replaceAll('<p>', '').replaceAll('</p>', '').replaceAll('<br />', '')
+  removeHtml (text) {
+    return text
+      .replaceAll('<p>', '')
+      .replaceAll('</p>', '')
+      .replaceAll('<br />', '')
+      .replaceAll('<br>', '')
+      .replaceAll('&amp;', '&')
+      .replaceAll('&gt;', '>')
+      .replaceAll ('&lt;', '<')
   }
 }
 
