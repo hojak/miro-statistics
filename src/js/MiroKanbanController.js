@@ -21,7 +21,9 @@ class MiroKanbanController {
       .then(function (data) {
         return 'cardId;new state;timestamp;\n' +
           data.map(card => MiroTextHelper.extractEventList(card.description, card.id))
-            .map(eventList => eventList.toCSV())
+            .flatMap(eventList => eventList.getItems())
+            .sort ( (eventA, eventB ) => eventA.getTimestamp() - eventB.getTimestamp())
+            .map(event => event.toCSV())
             .join('') +
           '\n\n\n\ncardId;title;\n' +
           data.map(card => card.id + ';' + $this.removeHtml(card.title) + ';'
