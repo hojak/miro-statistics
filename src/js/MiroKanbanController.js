@@ -42,6 +42,28 @@ class MiroKanbanController {
       .replaceAll('&gt;', '>')
       .replaceAll ('&lt;', '<')
   }
+
+
+  showCfd () {
+    var htmlContent = null
+    var xmlhttp = new XMLHttpRequest()
+    xmlhttp.open("GET", 'cfd.html', false)
+    xmlhttp.send();
+    if (xmlhttp.status==200) {
+      htmlContent = xmlhttp.responseText
+    } else {
+      htmlContent = "<html><body>Error</body></html>"
+    }
+
+    htmlContent = htmlContent.replace('</body>', '<pre>data = [100,200,300]</pre></body>');
+
+    const urlContent = URL.createObjectURL(
+        new Blob([htmlContent], { type: "text/html" })
+    );
+
+    const win = window.open( urlContent, "_blank" )
+  }
+
 }
 
 module.exports = MiroKanbanController

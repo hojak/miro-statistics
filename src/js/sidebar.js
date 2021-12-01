@@ -13,4 +13,11 @@ window.onload = function () {
       window.open(csvFile)
     })
   }
+
+
+  document.getElementById('button_show_cfd').onclick = function () {
+    controller.getCsvData().then( data => 
+      controller.showCfd( data )
+    )
+  }
 }
