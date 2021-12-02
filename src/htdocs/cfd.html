@@ -9,57 +9,54 @@
 <body>
   <h1>Kanban CFD Chart</h1>
 
-
   <div id="chart" style="width: 100%; height: 90vh;">
     <canvas id="myChart" style="width:100%; height: 100%;"></canvas>
   </div>
 
 <script>
 
-const CHART_COLORS = {
-  red: 'rgb(255, 99, 132)',
-  orange: 'rgb(255, 159, 64)',
-  yellow: 'rgb(255, 205, 86)',
-  green: 'rgb(75, 192, 192)',
-  blue: 'rgb(54, 162, 235)',
-  purple: 'rgb(153, 102, 255)',
-  grey: 'rgb(201, 203, 207)'
-};
+const CHART_COLORS = [
+  'rgb(255, 99, 132)',
+  'rgb(255, 159, 64)',
+  'rgb(255, 205, 86)',
+  'rgb(75, 192, 192)',
+  'rgb(54, 162, 235)',
+  'rgb(153, 102, 255)',
+  'rgb(201, 203, 207)'
+];
 
 const ctx = document.getElementById('myChart').getContext('2d');
 
-const DATA_COUNT = 7;
-
-const labels = ['Datum 2','Datum 3','Datum 4','Datum 5','Datum 6','Datum 7','Datum 8',];
+const columnLabels = ['Datum 2','Datum 3','Datum 4','Datum 5','Datum 6','Datum 7','Datum 8',];
 const data = {
-  labels: labels,
+  labels: columnLabels,
   datasets: [
     {
       label: 'My First dataset',
       data: [1,2,3,4,5,6,7],
-      borderColor: CHART_COLORS.red,
-      backgroundColor: CHART_COLORS.red,
+      borderColor: CHART_COLORS[0],
+      backgroundColor: CHART_COLORS[0],
       fill: true
     },
     {
       label: 'My Second dataset',
       data: [0,0,0,1,1,1,2],
-      borderColor: CHART_COLORS.blue,
-      backgroundColor: CHART_COLORS.blue,
+      borderColor: CHART_COLORS[1],
+      backgroundColor: CHART_COLORS[1],
       fill: true
     },
     {
       label: 'My Third dataset',
       data: [0,0,0,4,3,2,1],
-      borderColor: CHART_COLORS.green,
-      backgroundColor: CHART_COLORS.green,
+      borderColor: CHART_COLORS[2],
+      backgroundColor: CHART_COLORS[2],
       fill: true
     },
     {
       label: 'My Fourth dataset',
       data: [1,2,2,3,2,1,2],
-      borderColor: CHART_COLORS.yellow,
-      backgroundColor: CHART_COLORS.yellow,
+      borderColor: CHART_COLORS[3],
+      backgroundColor: CHART_COLORS[4],
       fill: true
     }
   ]
@@ -73,7 +70,7 @@ const config = {
     plugins: {
       title: {
         display: true,
-        text: (ctx) => 'Chart.js Line Chart - stacked=' + ctx.chart.options.scales.y.stacked
+        text: (ctx) => 'Kanban CFD Chart'
       },
       tooltip: {
         mode: 'index'
