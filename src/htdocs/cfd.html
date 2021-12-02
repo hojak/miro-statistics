@@ -2,20 +2,110 @@
 <html lang="en">
 
 <head>
-  <script src="https://miro.com/app/static/sdk.1.1.js"></script>
-  <script src="js/main.js"></script>
   <title>Kanban CFD</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
   <h1>Kanban CFD Chart</h1>
 
 
-  <script language="javascript">
-    // Data Start
-    var data = [1,2,3];
-    // Data End
-  </script>
+  <div id="chart" style="width: 100%; height: 90vh;">
+    <canvas id="myChart" style="width:100%; height: 100%;"></canvas>
+  </div>
+
+<script>
+
+const CHART_COLORS = {
+  red: 'rgb(255, 99, 132)',
+  orange: 'rgb(255, 159, 64)',
+  yellow: 'rgb(255, 205, 86)',
+  green: 'rgb(75, 192, 192)',
+  blue: 'rgb(54, 162, 235)',
+  purple: 'rgb(153, 102, 255)',
+  grey: 'rgb(201, 203, 207)'
+};
+
+const ctx = document.getElementById('myChart').getContext('2d');
+
+const DATA_COUNT = 7;
+
+const labels = ['Datum 2','Datum 3','Datum 4','Datum 5','Datum 6','Datum 7','Datum 8',];
+const data = {
+  labels: labels,
+  datasets: [
+    {
+      label: 'My First dataset',
+      data: [1,2,3,4,5,6,7],
+      borderColor: CHART_COLORS.red,
+      backgroundColor: CHART_COLORS.red,
+      fill: true
+    },
+    {
+      label: 'My Second dataset',
+      data: [0,0,0,1,1,1,2],
+      borderColor: CHART_COLORS.blue,
+      backgroundColor: CHART_COLORS.blue,
+      fill: true
+    },
+    {
+      label: 'My Third dataset',
+      data: [0,0,0,4,3,2,1],
+      borderColor: CHART_COLORS.green,
+      backgroundColor: CHART_COLORS.green,
+      fill: true
+    },
+    {
+      label: 'My Fourth dataset',
+      data: [1,2,2,3,2,1,2],
+      borderColor: CHART_COLORS.yellow,
+      backgroundColor: CHART_COLORS.yellow,
+      fill: true
+    }
+  ]
+};
+
+const config = {
+  type: 'line',
+  data: data,
+  options: {
+    responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        text: (ctx) => 'Chart.js Line Chart - stacked=' + ctx.chart.options.scales.y.stacked
+      },
+      tooltip: {
+        mode: 'index'
+      },
+    },
+    interaction: {
+      mode: 'nearest',
+      axis: 'x',
+      intersect: false
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: 'Date'
+        }
+      },
+      y: {
+        stacked: true,
+        title: {
+          display: true,
+          text: 'Number of Cards'
+        }
+      }
+    }
+  }
+};
+
+
+
+const myChart = new Chart(ctx, config);
+</script>
 
 </body>
 
