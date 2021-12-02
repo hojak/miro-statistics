@@ -1,6 +1,3 @@
-/* global XMLHttpRequest */
-/* global Blob */
-
 const MiroTextHelper = require('./MiroTextHelper')
 class MiroKanbanController {
   constructor (miro) {
@@ -22,7 +19,7 @@ class MiroKanbanController {
     return await this.miro.board.widgets.get({ type: 'CARD' })
   }
 
-  getEventlistOfCards ( miroCardData ) {
+  getEventlistOfCards (miroCardData) {
     return miroCardData.map(card => MiroTextHelper.extractEventList(card.description, card.id))
       .flatMap(eventList => eventList.getItems())
       .sort((eventA, eventB) => eventA.getTimestamp() - eventB.getTimestamp())
@@ -30,10 +27,10 @@ class MiroKanbanController {
 
   async getCsvData () {
     const $this = this
-    return await $this.getAllCards ()
+    return await $this.getAllCards()
       .then(function (data) {
         return 'cardId;new state;timestamp;\n' +
-          $this.getEventlistOfCards ( data )
+          $this.getEventlistOfCards(data)
             .map(event => event.toCSV())
             .join('') +
           '\n\n\n\ncardId;title;\n' +
@@ -44,9 +41,8 @@ class MiroKanbanController {
 
   async getChronologicalEventList () {
     const $this = this
-    return await $this.getAllCards().then ( $this.getEventlistOfCards );
+    return await $this.getAllCards().then($this.getEventlistOfCards)
   }
-
 
   removeHtml (text) {
     return text
