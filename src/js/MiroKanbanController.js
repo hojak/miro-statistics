@@ -22,12 +22,12 @@ class MiroKanbanController {
         return 'cardId;new state;timestamp;\n' +
           data.map(card => MiroTextHelper.extractEventList(card.description, card.id))
             .flatMap(eventList => eventList.getItems())
-            .sort ( (eventA, eventB ) => eventA.getTimestamp() - eventB.getTimestamp())
+            .sort((eventA, eventB) => eventA.getTimestamp() - eventB.getTimestamp())
             .map(event => event.toCSV())
             .join('') +
           '\n\n\n\ncardId;title;\n' +
           data.map(card => card.id + ';' + $this.removeHtml(card.title) + ';'
-        ).join('\n')
+          ).join('\n')
       }
       )
   }
@@ -40,30 +40,28 @@ class MiroKanbanController {
       .replaceAll('<br>', '')
       .replaceAll('&amp;', '&')
       .replaceAll('&gt;', '>')
-      .replaceAll ('&lt;', '<')
+      .replaceAll('&lt;', '<')
   }
-
 
   showCfd () {
-    var htmlContent = null
-    var xmlhttp = new XMLHttpRequest()
-    xmlhttp.open("GET", 'cfd.html', false)
-    xmlhttp.send();
-    if (xmlhttp.status==200) {
+    let htmlContent = null
+    const xmlhttp = new XMLHttpRequest()
+    xmlhttp.open('GET', 'cfd.html', false)
+    xmlhttp.send()
+    if (xmlhttp.status == 200) {
       htmlContent = xmlhttp.responseText
     } else {
-      htmlContent = "<html><body>Error</body></html>"
+      htmlContent = '<html><body>Error</body></html>'
     }
 
-    htmlContent = htmlContent.replace('</body>', '<pre>data = [100,200,300]</pre></body>');
+    htmlContent = htmlContent.replace('</body>', '<pre>data = [100,200,300]</pre></body>')
 
     const urlContent = URL.createObjectURL(
-        new Blob([htmlContent], { type: "text/html" })
-    );
+      new Blob([htmlContent], { type: 'text/html' })
+    )
 
-    const win = window.open( urlContent, "_blank" )
+    const win = window.open(urlContent, '_blank')
   }
-
 }
 
 module.exports = MiroKanbanController
