@@ -1,3 +1,6 @@
+/* global XMLHttpRequest */
+/* global Blob */
+
 const MiroTextHelper = require('./MiroTextHelper')
 class MiroKanbanController {
   constructor (miro) {
@@ -48,7 +51,7 @@ class MiroKanbanController {
     const xmlhttp = new XMLHttpRequest()
     xmlhttp.open('GET', 'cfd.html', false)
     xmlhttp.send()
-    if (xmlhttp.status == 200) {
+    if (xmlhttp.status === 200) {
       htmlContent = xmlhttp.responseText
     } else {
       htmlContent = '<html><body>Error</body></html>'
@@ -60,7 +63,7 @@ class MiroKanbanController {
       new Blob([htmlContent], { type: 'text/html' })
     )
 
-    const win = window.open(urlContent, '_blank')
+    window.open(urlContent, '_blank')
   }
 }
 
