@@ -53,11 +53,8 @@ function getChartDataForInput () {
 }
 
 function getColumnLabelsForInput () {
-  return ['Datum 2','Datum 3','Datum 4','Datum 5','Datum 6','Datum 7','Datum 8'];
+  return ['Date 2','Date 3','Date 4','Date 5','Date 6','Date 7','Date 8'];
 }
-
-
-
 
 var cfdChart;
 window.onload = function () {
@@ -106,17 +103,6 @@ window.onload = function () {
   const ctx = document.getElementById('myChart').getContext('2d');
   cfdChart = new Chart(ctx, config);
 }
-</script>
-
-
-<script>
-  
- inputData = [
- [1,2,3],
- [1,2,3],
- [1,2,3],
- ]; 
-
 </script>
 
 </body>
