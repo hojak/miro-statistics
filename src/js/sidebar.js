@@ -22,12 +22,12 @@ window.onload = function () {
 
     controller.getChronologicalEventList().then(
       data => {
-        console.log(data.map(element => element.timestamp))
+        console.log(data.map(element => new Date ( element.timestamp).toLocaleString()))
 
-        const columnLabels = getCfdTimestamps(data)
-        const cfdData = createCfdData(columnDefinitions, columnLabels, data)
+        const listOfDailyTimestamps = getCfdTimestamps(data)
+        const cfdData = createCfdData(columnDefinitions, listOfDailyTimestamps, data)
 
-        showCfd(columnDefinitions, columnLabels, cfdData)
+        showCfd(columnDefinitions, listOfDailyTimestamps.map(ts => new Date ( ts ).toLocaleString()), cfdData)
       }
     )
   }
