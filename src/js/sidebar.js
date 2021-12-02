@@ -22,10 +22,10 @@ window.onload = function () {
       data => { 
         console.log ( data.map ( element => element.timestamp ))
 
-        const dateLabels = getCfdDates (data)
-        const cfdData = createCfdData ( columnDefinitions, dateLabels, data )
+        const columnLabels = getCfdDates (data)
+        const cfdData = createCfdData ( columnDefinitions, columnLabels, data )
 
-        showCfd ( dateLabels, cfdData )
+        showCfd ( columnDefinitions, columnLabels, cfdData )
       }
     );
 
@@ -44,7 +44,7 @@ function getCfdDates ( eventList ) {
   return [1,2,3]
 }
 
-function showCfd ( labels, data ) {
+function showCfd ( dataRowLabels, columnLabels, data ) {
   let htmlContent = null
   const xmlhttp = new XMLHttpRequest()
   xmlhttp.open('GET', 'cfd.html', false)
@@ -57,7 +57,7 @@ function showCfd ( labels, data ) {
 
   htmlContent = htmlContent.replace(
     '</body>',
-    getJsCodeForLabelsAndData ( labels, data ) + '</body>'
+    getJsCodeForLabelsAndData ( dataRowLabels, columnLabels, data ) + '</body>'
   )
 
   const urlContent = URL.createObjectURL(
@@ -67,9 +67,10 @@ function showCfd ( labels, data ) {
   window.open(urlContent, '_blank')
 }
 
-function getJsCodeForLabelsAndData ( labels, data ) {
+function getJsCodeForLabelsAndData ( dataRowLabels, columnLabels, data ) {
   return '<script>' 
-    + '  dataRowLabels = ' +jsFriendlyJSONStringify(labels)+ "\n"
+    + '  dataRowLabels = ' +jsFriendlyJSONStringify(dataRowLabels)+ "\n"
+    + '  columnLabels = ' + jsFriendlyJSONStringify(columnLabels) + "\n"
     + '  inputData = ' + jsFriendlyJSONStringify(data)+"\n"
   + '</script>'
 }
