@@ -15,6 +15,15 @@
 
 <script>
 
+
+var dataRowLabels = ['Row 1', 'Row 2', 'Row ´3', 'Row 4']
+var inputData = [
+  [1,2,3,4,5,6,7],
+  [0,0,0,1,1,1,2],
+  [0,0,0,4,3,2,1],
+  [1,2,2,3,2,1,2],
+];
+
 const CHART_COLORS = [
   'rgb(255, 99, 132)',
   'rgb(255, 159, 64)',
@@ -25,83 +34,89 @@ const CHART_COLORS = [
   'rgb(201, 203, 207)'
 ];
 
-const ctx = document.getElementById('myChart').getContext('2d');
+function getChartDataForInput () {
+  var result = [];
+  var counter = 0;
 
-const columnLabels = ['Datum 2','Datum 3','Datum 4','Datum 5','Datum 6','Datum 7','Datum 8',];
-const data = {
-  labels: columnLabels,
-  datasets: [
-    {
-      label: 'My First dataset',
-      data: [1,2,3,4,5,6,7],
-      borderColor: CHART_COLORS[0],
-      backgroundColor: CHART_COLORS[0],
-      fill: true
-    },
-    {
-      label: 'My Second dataset',
-      data: [0,0,0,1,1,1,2],
-      borderColor: CHART_COLORS[1],
-      backgroundColor: CHART_COLORS[1],
-      fill: true
-    },
-    {
-      label: 'My Third dataset',
-      data: [0,0,0,4,3,2,1],
-      borderColor: CHART_COLORS[2],
-      backgroundColor: CHART_COLORS[2],
-      fill: true
-    },
-    {
-      label: 'My Fourth dataset',
-      data: [1,2,2,3,2,1,2],
-      borderColor: CHART_COLORS[3],
-      backgroundColor: CHART_COLORS[4],
+  return inputData.map ( dataSet => {
+    const result = {
+      label: dataRowLabels[counter],
+      data: dataSet,
+      borderColor: CHART_COLORS[counter],
+      backgroundColor: CHART_COLORS[counter],
       fill: true
     }
-  ]
-};
+    counter ++;
+    return result;
+  });
 
-const config = {
-  type: 'line',
-  data: data,
-  options: {
-    responsive: true,
-    plugins: {
-      title: {
-        display: true,
-        text: (ctx) => 'Kanban CFD Chart'
-      },
-      tooltip: {
-        mode: 'index'
-      },
-    },
-    interaction: {
-      mode: 'nearest',
-      axis: 'x',
-      intersect: false
-    },
-    scales: {
-      x: {
+}
+
+function getColumnLabelsForInput () {
+  return ['Datum 2','Datum 3','Datum 4','Datum 5','Datum 6','Datum 7','Datum 8'];
+}
+
+
+
+
+var cfdChart;
+window.onload = function () {
+  const data = {
+    labels: getColumnLabelsForInput(),
+    datasets: getChartDataForInput()
+  };
+
+  const config = {
+    type: 'line',
+    data: data,
+    options: {
+      responsive: true,
+      plugins: {
         title: {
           display: true,
-          text: 'Date'
-        }
+          text: (ctx) => 'Kanban CFD Chart'
+        },
+        tooltip: {
+          mode: 'index'
+        },
       },
-      y: {
-        stacked: true,
-        title: {
-          display: true,
-          text: 'Number of Cards'
+      interaction: {
+        mode: 'nearest',
+        axis: 'x',
+        intersect: false
+      },
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'Date'
+          }
+        },
+        y: {
+          stacked: true,
+          title: {
+            display: true,
+            text: 'Number of Cards'
+          }
         }
       }
     }
-  }
-};
+  };
+
+  const ctx = document.getElementById('myChart').getContext('2d');
+  cfdChart = new Chart(ctx, config);
+}
+</script>
 
 
+<script>
+  
+ inputData = [
+ [1,2,3],
+ [1,2,3],
+ [1,2,3],
+ ]; 
 
-const myChart = new Chart(ctx, config);
 </script>
 
 </body>
