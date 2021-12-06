@@ -4,18 +4,28 @@
 <head>
   <title>Kanban CFD</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    #id {
+      width: 100%;
+      height: 90vh;
+    }
+
+    #my_chart {
+      width:100%;
+      height: 100%;
+    }
+
+  </style>
 </head>
 
 <body>
   <h1>Kanban CFD Chart</h1>
 
-  <div id="chart" style="width: 100%; height: 90vh;">
-    <canvas id="myChart" style="width:100%; height: 100%;"></canvas>
+  <div id="chart">
+    <canvas id="my_chart"></canvas>
   </div>
 
 <script>
-
-
 var columnLabels = ['Date 2','Date 3','Date 4','Date 5','Date 6','Date 7','Date 8']
 var dataRowLabels = ['Row 1', 'Row 2', 'Row ´3', 'Row 4']
 var inputData = [
