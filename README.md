@@ -1,4 +1,5 @@
 # Miro App: Kanban Statistics
+This small projects adds tools for managing and analyzing a kanban board on virtual whiteboard in https://miro.com.
 
 ## Development
 
