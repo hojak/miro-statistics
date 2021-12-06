@@ -11,3 +11,8 @@ Feature Requests (unordered)
 Should be done sometimes
 * test coverage
 * mock miro
+* Describe using the app in miro in README
+  - 1) Create a miro Board in the miro App
+  - 2) In Miro Configuration -> Your Apps -> Local Testing App
+  - Important: Permissions
+* make `npm run lint` work
