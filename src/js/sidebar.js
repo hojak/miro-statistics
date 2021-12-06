@@ -22,64 +22,63 @@ window.onload = function () {
 
     controller.getChronologicalEventList().then(
       data => {
-        console.log(data.map(element => new Date ( element.timestamp).toLocaleString()))
+        console.log(data.map(element => new Date(element.timestamp).toLocaleString()))
 
         const listOfDailyTimestamps = getCfdTimestamps(data)
         const cfdData = createCfdData(columnDefinitions, listOfDailyTimestamps, data)
 
-        showCfd(columnDefinitions, listOfDailyTimestamps.map(ts => new Date ( ts ).toLocaleString()), cfdData)
+        showCfd(columnDefinitions, listOfDailyTimestamps.map(ts => new Date(ts).toLocaleString()), cfdData)
       }
     )
   }
 }
 
 function createCfdData (columnDefinition, listOfDailyTimestamps, eventList) {
-  var indexOfNextDaily = 0
+  let indexOfNextDaily = 0
 
-  var currentStatus = columnDefinition.map(item => 0);
-  var cardStates = {}
+  const currentStatus = columnDefinition.map(item => 0)
+  const cardStates = {}
 
-  var statusName2ColumnNumber = {}
-  columnDefinition.forEach((columns, index ) => {
-    columns.forEach ( column => statusName2ColumnNumber[column] = index )
-  });
+  const statusName2ColumnNumber = {}
+  columnDefinition.forEach((columns, index) => {
+    columns.forEach(column => { statusName2ColumnNumber[column] = index })
+  })
 
-  var dailyCardNumbers = []
-  eventList.forEach ( event => {
-    while ( event.getTimestamp() > listOfDailyTimestamps[indexOfNextDaily] && indexOfNextDaily < listOfDailyTimestamps.length ) {
-      dailyCardNumbers.push ( [...currentStatus] )
-      indexOfNextDaily++;
+  const dailyCardNumbers = []
+  eventList.forEach(event => {
+    while (event.getTimestamp() > listOfDailyTimestamps[indexOfNextDaily] && indexOfNextDaily < listOfDailyTimestamps.length) {
+      dailyCardNumbers.push([...currentStatus])
+      indexOfNextDaily++
     }
 
-    if ( event.getObjectId() in cardStates ) {
-      currentStatus[cardStates[event.getObjectId()]] --
-      delete ( cardStates[event.getObjectId()])
+    if (event.getObjectId() in cardStates) {
+      currentStatus[cardStates[event.getObjectId()]]--
+      delete (cardStates[event.getObjectId()])
     }
 
-    if ( event.getNewStatus() in statusName2ColumnNumber ) {
+    if (event.getNewStatus() in statusName2ColumnNumber) {
       cardStates[event.getObjectId()] = statusName2ColumnNumber[event.getNewStatus()]
       currentStatus[cardStates[event.getObjectId()]]++
     }
   })
 
-  console.log ( "resulting array")
-  console.log ( dailyCardNumbers )
+  console.log('resulting array')
+  console.log(dailyCardNumbers)
 
   // transponse
-  var result = transpose ( dailyCardNumbers );
+  const result = transpose(dailyCardNumbers)
 
-  console.log ( "transposed array")
-  console.log ( result )
+  console.log('transposed array')
+  console.log(result)
 
   return result
 }
 
-function transpose(array) {
+function transpose (array) {
   return array.reduce((prev, next) => next.map((item, i) =>
-      (prev[i] || []).concat(next[i])
-  ), []);
+    (prev[i] || []).concat(next[i])
+  ), [])
 }
-
 
 const hourOfDaily = 9
 const minuteOfDaily = 0
@@ -140,7 +139,7 @@ function showCfd (dataRowLabels, columnLabels, data) {
 
   htmlContent = htmlContent.replace(
     '</body>',
-    getJsCodeForLabelsAndData(dataRowLabels.map ( line => line.join (", ")), columnLabels, data) + '</body>'
+    getJsCodeForLabelsAndData(dataRowLabels.map(line => line.join(', ')), columnLabels, data) + '</body>'
   )
 
   const urlContent = URL.createObjectURL(
