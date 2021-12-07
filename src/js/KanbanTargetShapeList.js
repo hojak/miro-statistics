@@ -39,6 +39,19 @@ class KanbanTargetShapeList {
     return this
   }
 
+  updateOrAddShape (shape) {
+    const found = this.items.find(item => item.MiroID === shape.MiroID)
+
+    if (found) {
+      this.items = this.items.filter(item => item.MiroID !== shape.MiroID)
+      this.items.push(shape)
+    } else {
+      this.items.push(shape)
+    }
+
+    return this
+  }
+
   findMatchingShape (point) {
     if (!(point instanceof Point)) {
       throw new TypeError('not a Point!')

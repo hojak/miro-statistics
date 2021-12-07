@@ -67,4 +67,32 @@ describe('KanbanTargetShapeList', function () {
       expect(testList.findMatchingShape(new Point(100, 100))).to.be.equal(undefined)
     })
   })
+
+  describe('#updateOrAddShape', function () {
+    it('has to add a new shape, if the old id is not present', function () {
+      const testList = new KanbanTargetShapeList([
+        new KanbanTargetShape('firstItem', 'some kanban name', new Point(20, 20), new Point(30, 30)),
+        new KanbanTargetShape('secodItem', 'some other kanban name', new Point(0, 0), new Point(10, 10))
+      ])
+
+      expect(testList.Items.length).to.be.equal(2)
+      expect(testList.Items.find(item => { return item.MiroID === 'firstItem' }).Name).to.be.equal('some kanban name')
+
+      testList.updateOrAddShape(new KanbanTargetShape('a 3rd item', 'some kanban name', new Point(20, 20), new Point(30, 30)))
+
+      expect(testList.Items.length).to.be.equal(3)
+    })
+
+    it('has to update the existing shape, if a matching id is present', function () {
+      const testList = new KanbanTargetShapeList([
+        new KanbanTargetShape('firstItem', 'some kanban name', new Point(20, 20), new Point(30, 30)),
+        new KanbanTargetShape('secodItem', 'some other kanban name', new Point(0, 0), new Point(10, 10))
+      ])
+
+      testList.updateOrAddShape(new KanbanTargetShape('firstItem', 'some new name', new Point(20, 20), new Point(30, 30)))
+
+      expect(testList.Items.length).to.be.equal(2)
+      expect(testList.Items.find(item => item.MiroID === 'firstItem').Name).to.be.equal('some new name')
+    })
+  })
 })
