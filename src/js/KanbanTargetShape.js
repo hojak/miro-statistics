@@ -1,6 +1,16 @@
 const Point = require('./Point')
+const MiroTextHelper = require('./MiroTextHelper')
 
 class KanbanTargetShape {
+  static createFromMiroShape (shape) {
+    return new KanbanTargetShape(
+      shape.id,
+      MiroTextHelper.getShapeName(shape.plainText),
+      new Point(shape.bounds.left, shape.bounds.top),
+      new Point(shape.bounds.right, shape.bounds.bottom)
+    )
+  }
+
   constructor (miroId, name, topLeft, bottomRight) {
     if (!(topLeft instanceof Point)) {
       throw new TypeError('not a Point')

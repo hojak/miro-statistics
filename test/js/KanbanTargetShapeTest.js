@@ -56,4 +56,34 @@ describe('KanbanTargetShape', function () {
       )
     })
   })
+
+  describe('#createFromMiroShape', function () {
+    const expectedName = 'some name'
+    const miroShapeMock = {
+      id: 'test',
+      plainText: '[<' + expectedName + '>]',
+      bounds: {
+        top: 100,
+        bottom: 150,
+        right: 10,
+        left: 20
+      }
+    }
+    const createdKanbanTargetShape = KanbanTargetShape.createFromMiroShape(miroShapeMock)
+
+    it('has to store the correct id', function () {
+      expect(createdKanbanTargetShape.MiroID).to.be.equal(miroShapeMock.id)
+    })
+
+    it('has to store the correct name', function () {
+      expect(createdKanbanTargetShape.Name).to.be.equal(expectedName)
+    })
+
+    it('has to store the correct coordinates', function () {
+      expect(createdKanbanTargetShape.TopLeft.X).to.be.equal(miroShapeMock.bounds.left)
+      expect(createdKanbanTargetShape.TopLeft.Y).to.be.equal(miroShapeMock.bounds.top)
+      expect(createdKanbanTargetShape.BottomRight.X).to.be.equal(miroShapeMock.bounds.right)
+      expect(createdKanbanTargetShape.BottomRight.Y).to.be.equal(miroShapeMock.bounds.bottom)
+    })
+  })
 })
