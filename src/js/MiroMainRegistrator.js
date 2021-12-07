@@ -1,6 +1,8 @@
 const KanbanTargetShapeList = require('./KanbanTargetShapeList')
+const KanbanTargetShape = require('./KanbanTargetShape')
 
 const MiroKanbanController = require('./MiroKanbanController')
+const MiroTextHelper = require('./MiroTextHelper')
 const Point = require('./Point')
 
 const icon = '<rect style="fill:none;stroke:#000000;stroke-width:0.1" x="1" y="1" height="20" width="6" />' +
@@ -79,6 +81,11 @@ class MiroMainRegistrator {
       if (eventSubject.type === 'CARD') {
         $this.miro.board.widgets.get({ id: eventSubject.id })
           .then(cardWidget => $this.handleTranformedCardWidget(cardWidget))
+      } else if (eventSubject.type === 'SHAPE') {
+        $this.miro.board.widgets.get({ id: eventSubject.id })
+          .then(resultList => resultList.forEach(shapeWidget => $this.handleUpdatedShapeWidget(shapeWidget)))
+      } else {
+        console.log('unkown subject type: ' + eventSubject.type)
       }
     })
   }
@@ -88,6 +95,12 @@ class MiroMainRegistrator {
 
     if (kanbanShape) {
       this.MiroKanbanController.updateKanbanMetrics(cardWidgetData, kanbanShape)
+    }
+  }
+
+  handleUpdatedShapeWidget (shapeWidget) {
+    if (MiroTextHelper.textIsShapeMarker(shapeWidget.plainText)) {
+      this.kanbanShapes.updateOrAddShape(KanbanTargetShape.createFromMiroShape(shapeWidget))
     }
   }
 
