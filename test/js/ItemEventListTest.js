@@ -125,4 +125,21 @@ describe('ItemEventList', function () {
       })
     })
   })
+
+  describe ('#filterEventsBefore', function () {
+    it('has to remove events before the given date', function () {
+      const initialList = new ItemEventList()
+        .addEvent(new StatusChangedEvent('id', 'work', 100000))
+        .addEvent(new StatusChangedEvent('id', 'discover', 300000))
+        .addEvent(new StatusChangedEvent('id', 'deliver', 200000))
+        .addEvent(new StatusChangedEvent('id', 'done', 400000))      
+
+      const filteredList = initialList.filterBeforeTimestamp ( 300000 );
+      const listOfTimestamps = filteredList.getItems().map(item => item.getTimestamp());
+
+      expect( filteredList.getItems().length).to.be.equal(2)
+      expect( listOfTimestamps).to.contain(300000)
+      expect( listOfTimestamps).to.contain(400000)
+    })
+  })
 })
