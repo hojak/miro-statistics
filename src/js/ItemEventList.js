@@ -80,6 +80,12 @@ class ItemEventList {
     return result
   }
 
+  filterAfterTimestamp ( timestamp ) {
+    const result = new ItemEventList()
+    result.items = this.items.filter ( item => item.getTimestamp() <= timestamp )
+    return result
+  }
+
   static createFromMiroString (miroString, objectId) {
     const result = new ItemEventList()
 
