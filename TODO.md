@@ -7,6 +7,9 @@ Feature Requests (unordered)
 * background service checking for card updates not caused by paying miro users
 * logging information about problems with (possibly manually edited) statistic data
 
+Needs to be done
+* care about summertime in creating list of timestamps for daylies
+
 Should be done sometimes
 * test coverage
 * mock miro

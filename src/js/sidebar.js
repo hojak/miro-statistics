@@ -109,6 +109,7 @@ function getCfdTimestamps (eventList) {
   const timestampOfFirstDaily = getFirstDailyForEventlist(eventList)
   const timestampOfLastDaily = getLastDailyForEventlist(eventList)
 
+  // todo: care about summertime
   const result = []
   for (let currentTimestampOfDaily = timestampOfFirstDaily; currentTimestampOfDaily <= timestampOfLastDaily; currentTimestampOfDaily += 24 * 3600 * 1000) {
     result.push(currentTimestampOfDaily)
