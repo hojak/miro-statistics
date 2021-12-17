@@ -10,6 +10,7 @@ Feature Requests (unordered)
 Should be done sometimes
 * test coverage
 * mock miro
+* use a visual component library like bootstap: https://valor-software.com/ngx-bootstrap/#/ or a general framework like foundation https://get.foundation/
 * Describe using the app in miro in README
   - 1) Create a miro Board in the miro App
   - 2) In Miro Configuration -> Your Apps -> Local Testing App
