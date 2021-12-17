@@ -18,12 +18,9 @@ window.onload = function () {
 
   document.getElementById('button_show_cfd').onclick = function () {
     const columnDefinitions = document.getElementById('cfd_groups').value.split('\n').map(entry => entry.split(','))
-    console.log(columnDefinitions)
 
     controller.getChronologicalEventList().then(
       data => {
-        console.log(data.map(element => new Date(element.timestamp).toLocaleString()))
-
         const listOfDailyTimestamps = getCfdTimestamps(data)
         const cfdData = createCfdData(columnDefinitions, listOfDailyTimestamps, data)
 
@@ -62,14 +59,8 @@ function createCfdData (columnDefinition, listOfDailyTimestamps, eventList) {
     }
   })
 
-  console.log('resulting array')
-  console.log(dailyCardNumbers)
-
   // transponse
   const result = transpose(dailyCardNumbers)
-
-  console.log('transposed array')
-  console.log(result)
 
   return result
 }

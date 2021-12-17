@@ -74,15 +74,15 @@ class ItemEventList {
     return this.items.map(item => item.toCSV()).join('')
   }
 
-  filterBeforeTimestamp ( timestamp ) {
+  filterBeforeTimestamp (timestamp) {
     const result = new ItemEventList()
-    result.items = this.items.filter ( item => item.getTimestamp() >= timestamp )
+    result.items = this.items.filter(item => item.getTimestamp() >= timestamp)
     return result
   }
 
-  filterAfterTimestamp ( timestamp ) {
+  filterAfterTimestamp (timestamp) {
     const result = new ItemEventList()
-    result.items = this.items.filter ( item => item.getTimestamp() <= timestamp )
+    result.items = this.items.filter(item => item.getTimestamp() <= timestamp)
     return result
   }
 
