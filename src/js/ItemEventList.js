@@ -74,6 +74,12 @@ class ItemEventList {
     return this.items.map(item => item.toCSV()).join('')
   }
 
+  filterBeforeTimestamp ( timestamp ) {
+    const result = new ItemEventList()
+    result.items = this.items.filter ( item => item.getTimestamp() >= timestamp )
+    return result
+  }
+
   static createFromMiroString (miroString, objectId) {
     const result = new ItemEventList()
 
