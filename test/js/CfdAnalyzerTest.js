@@ -16,9 +16,7 @@ describe('CfdAnalyzer', function () {
   describe('#getCfdData', function () {
     it('has to return an empty array for no events and no defined start and end dates', function () {
       const testee = new CfdAnalyzer([['todo'], ['work'], ['done']], [])
-
       const result = testee.getCfdData()
-
       expect(result).to.be.empty
     })
 
@@ -33,6 +31,38 @@ describe('CfdAnalyzer', function () {
         expect(laneData).has.lengthOf(5)
         laneData.forEach(entry => expect(entry).to.be.equal(0))
       })
+    })
+
+    it('has to return the desired result with one card', function () {
+        const testee = new CfdAnalyzer([['done'], ['work'], ['todo']], [
+            new StatusChangedEvent('id', 'todo', Date.parse ('2021-10-12 10:00')),
+            new StatusChangedEvent('id', 'work', Date.parse ('2021-10-14 10:00')),
+            new StatusChangedEvent('id', 'done', Date.parse ('2021-10-15 12:00')),
+        ])
+        const result = testee.getCfdData()
+        expect(result).has.lengthOf(3)
+
+        expect(result[0]).to.eql([0,0,0,0,1])
+        expect(result[1]).to.eql([0,0,0,1,0])
+        expect(result[2]).to.eql([0,1,1,0,0])
+    })
+
+    it('has to return the desired result for two cards', function () {
+        const testee = new CfdAnalyzer([['done'], ['work'], ['todo']], [
+            new StatusChangedEvent('id', 'todo', Date.parse ('2021-10-12 10:00')),
+            new StatusChangedEvent('id', 'work', Date.parse ('2021-10-14 10:00')),
+            new StatusChangedEvent('id', 'done', Date.parse ('2021-10-15 12:00')),
+            new StatusChangedEvent('id2', 'todo', Date.parse ('2021-10-14 12:00')),
+            new StatusChangedEvent('id2', 'work', Date.parse ('2021-10-15 12:00')),
+            new StatusChangedEvent('id2', 'done', Date.parse ('2021-10-16 12:00')),
+        ].sort((eventA, eventB) => eventA.getTimestamp() - eventB.getTimestamp()))
+        const result = testee.getCfdData()
+        expect(result).has.lengthOf(3)
+
+        // 12. - 13. - 14. - 15. - 16. - 17.
+        expect(result[0]).to.eql([0,0,0,0,1,2])
+        expect(result[1]).to.eql([0,0,0,1,1,0])
+        expect(result[2]).to.eql([0,1,1,1,0,0])
     })
   })
 

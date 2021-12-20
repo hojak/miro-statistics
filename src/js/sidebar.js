@@ -19,8 +19,27 @@ window.onload = function () {
   document.getElementById('button_show_cfd').onclick = function () {
     const columnDefinitions = document.getElementById('cfd_groups').value.split('\n').map(entry => entry.split(','))
 
+    const filterBefore = getBeforeTimestamp()
+    const filterAfter = getAfterTimestamp()
+
+    console.log(filterBefore)
+    console.log(new Date(filterBefore))
+    console.log(filterAfter)
+    console.log(new Date(filterAfter))
+
     controller.getChronologicalEventList().then(
       data => {
+        console.log('before filter')
+        console.log(data)
+        if (filterBefore) {
+          data = data.filter(item => item.getTimestamp() >= filterBefore)
+        }
+        if (filterAfter) {
+          data = data.filter(item => item.getTimestamp() <= filterAfter)
+        }
+        console.log('after filter')
+        console.log(data)
+
         const listOfDailyTimestamps = getCfdTimestamps(data)
         const cfdData = createCfdData(columnDefinitions, listOfDailyTimestamps, data)
 
@@ -30,92 +49,21 @@ window.onload = function () {
   }
 }
 
-function createCfdData (columnDefinition, listOfDailyTimestamps, eventList) {
-  let indexOfNextDaily = 0
-
-  const currentStatus = columnDefinition.map(item => 0)
-  const cardStates = {}
-
-  const statusName2ColumnNumber = {}
-  columnDefinition.forEach((columns, index) => {
-    columns.forEach(column => { statusName2ColumnNumber[column] = index })
-  })
-
-  const dailyCardNumbers = []
-  eventList.forEach(event => {
-    while (event.getTimestamp() > listOfDailyTimestamps[indexOfNextDaily] && indexOfNextDaily < listOfDailyTimestamps.length) {
-      dailyCardNumbers.push([...currentStatus])
-      indexOfNextDaily++
-    }
-
-    if (event.getObjectId() in cardStates) {
-      currentStatus[cardStates[event.getObjectId()]]--
-      delete (cardStates[event.getObjectId()])
-    }
-
-    if (event.getNewStatus() in statusName2ColumnNumber) {
-      cardStates[event.getObjectId()] = statusName2ColumnNumber[event.getNewStatus()]
-      currentStatus[cardStates[event.getObjectId()]]++
-    }
-  })
-
-  // transponse
-  const result = transpose(dailyCardNumbers)
-
-  return result
-}
-
-function transpose (array) {
-  return array.reduce((prev, next) => next.map((item, i) =>
-    (prev[i] || []).concat(next[i])
-  ), [])
-}
-
-const hourOfDaily = 9
-const minuteOfDaily = 0
-
-function getFirstDailyForEventlist (eventList) {
-  const timeOfFirstEvent = eventList[0].getTimestamp()
-
-  const startDate = new Date(timeOfFirstEvent)
-  startDate.setHours(hourOfDaily)
-  startDate.setMinutes(minuteOfDaily)
-  startDate.setSeconds(0)
-  startDate.setMilliseconds(0)
-  if (startDate.getTime() < timeOfFirstEvent) {
-    startDate.setDate(startDate.getDate() - 1)
+function getTimstampFromInput (htmlId) {
+  const input = document.getElementById(htmlId).value
+  if (!input) {
+    return null
+  } else {
+    return Date.parse(input)
   }
-
-  return startDate.getTime()
 }
 
-function getLastDailyForEventlist (eventList) {
-  const timeOfFirstEvent = eventList[eventList.length - 1].getTimestamp()
-
-  const endDate = new Date(timeOfFirstEvent)
-  endDate.setHours(hourOfDaily)
-  endDate.setMinutes(minuteOfDaily)
-  endDate.setSeconds(0)
-  endDate.setMilliseconds(0)
-
-  if (endDate.getTime() > timeOfFirstEvent) {
-    endDate.setDate(endDate.getDate() + 1)
-  }
-
-  return endDate.getTime()
+function getBeforeTimestamp () {
+  return getTimstampFromInput('start_date')
 }
 
-function getCfdTimestamps (eventList) {
-  const timestampOfFirstDaily = getFirstDailyForEventlist(eventList)
-  const timestampOfLastDaily = getLastDailyForEventlist(eventList)
-
-  // todo: care about summertime
-  const result = []
-  for (let currentTimestampOfDaily = timestampOfFirstDaily; currentTimestampOfDaily <= timestampOfLastDaily; currentTimestampOfDaily += 24 * 3600 * 1000) {
-    result.push(currentTimestampOfDaily)
-  }
-
-  return result
+function getAfterTimestamp () {
+  return getTimstampFromInput('end_date')
 }
 
 function showCfd (dataRowLabels, columnLabels, data) {
