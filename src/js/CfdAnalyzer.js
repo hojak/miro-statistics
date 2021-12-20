@@ -13,16 +13,32 @@ class CfdAnalyzer {
     this._minuteOfDaily = 0
   }
 
+  get startAtDate () {
+    return this._startAtDate
+  }
+
   set startAtDate (date) {
     this._startAtDate = date
+  }
+
+  get endAtDate () {
+    return this._endAtDate
   }
 
   set endAtDate (date) {
     this._endAtDate = date
   }
 
+  get hourOfDaily () {
+    return this._hourOfDaily
+  }
+
   set hourOfDaily (hour) {
     this._hourOfDaily = hour
+  }
+
+  get minuteOfDaily () {
+    return this._minuteOfDaily
   }
 
   set minuteOfDaily (minute) {
@@ -83,7 +99,7 @@ class CfdAnalyzer {
       timeOfFirstEvent = this._eventList[0].getTimestamp()
     }
 
-    if (timeOfFirstEvent === null || (this._startAtDate !== null && timeOfFirstEvent < this._startAtDate)) {
+    if (timeOfFirstEvent === null || (this._startAtDate !== null && timeOfFirstEvent < this._startAtDate)) {
       timeOfFirstEvent = this._startAtDate
     }
 
@@ -108,7 +124,7 @@ class CfdAnalyzer {
     if (this._eventList.length > 0) {
       timeOfLastEvent = this._eventList[this._eventList.length - 1].getTimestamp()
     }
-    if (timeOfLastEvent === null || (this._endAtDate !== null && timeOfLastEvent > this._endAtDate)) {
+    if (timeOfLastEvent === null || (this._endAtDate !== null && timeOfLastEvent > this._endAtDate)) {
       timeOfLastEvent = this._endAtDate
     }
 

@@ -3,6 +3,7 @@
 /* global Blob */
 
 const MiroKanbanController = require('./MiroKanbanController')
+const CfdAnalyzer = require('./CfdAnalyzer')
 
 const controller = new MiroKanbanController(miro)
 
@@ -29,21 +30,21 @@ window.onload = function () {
 
     controller.getChronologicalEventList().then(
       data => {
-        console.log('before filter')
-        console.log(data)
+        const cfdAnalyzer = new CfdAnalyzer(columnDefinitions, data)
         if (filterBefore) {
           data = data.filter(item => item.getTimestamp() >= filterBefore)
+          cfdAnalyzer.endAtDate = filterBefore
         }
         if (filterAfter) {
           data = data.filter(item => item.getTimestamp() <= filterAfter)
+          cfdAnalyzer.startAtDate = filterAfter
         }
         console.log('after filter')
         console.log(data)
 
-        const listOfDailyTimestamps = getCfdTimestamps(data)
-        const cfdData = createCfdData(columnDefinitions, listOfDailyTimestamps, data)
+        const cfdData = cfdAnalyzer.getCfdData()
 
-        showCfd(columnDefinitions, listOfDailyTimestamps.map(ts => new Date(ts).toLocaleString()), cfdData)
+        showCfd(columnDefinitions, cfdAnalyzer.getTimestampsOfDaylies().map(ts => new Date(ts).toLocaleString()), cfdData)
       }
     )
   }

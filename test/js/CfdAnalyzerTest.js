@@ -1,7 +1,6 @@
-const { fail } = require('assert')
+/* eslint-disable no-unused-expressions */
 
 const { expect } = require('chai')
-const { assert } = require('console')
 const CfdAnalyzer = require('../../src/js/CfdAnalyzer')
 const StatusChangedEvent = require('../../src/js/StatusChangedEvent')
 
@@ -20,7 +19,7 @@ describe('CfdAnalyzer', function () {
       expect(result).to.be.empty
     })
 
-    it('has to return a two dimensional array of 0, with number of \'lanes\' as first dimension and number of days as second', function () {
+    it('has to return a two dimensional array of 0, with number of \'lanes\' as first dimension and number of days as second', function () {
       const testee = new CfdAnalyzer([['todo'], ['work'], ['done']], [])
       testee.startAtDate = Date.parse('2021-10-10 12:00')
       testee.endAtDate = Date.parse('2021-10-14')
@@ -74,14 +73,14 @@ describe('CfdAnalyzer', function () {
     })
   })
 
-  describe('#getFirstDailyForEventlist', function () {
+  describe('#getFirstDailyForEventlist', function () {
     it('has to return null for empty event list and no start date', function () {
       const testee = new CfdAnalyzer([['todo'], ['work'], ['done']], [])
       expect(testee.getFirstDailyForEventlist()).to.be.null
     })
   })
 
-  describe('#getFirstDailyForEventlist', function () {
+  describe('#getFirstDailyForEventlist', function () {
     it('has to return null for empty event list and no start date', function () {
       const testee = new CfdAnalyzer([['todo'], ['work'], ['done']], [])
       expect(testee.getFirstDailyForEventlist()).to.be.null
@@ -111,7 +110,7 @@ describe('CfdAnalyzer', function () {
     })
   })
 
-  describe('#getLastDailyForEventlist', function () {
+  describe('#getLastDailyForEventlist', function () {
     it('has to return null for empty event list and no end date', function () {
       const testee = new CfdAnalyzer([['todo'], ['work'], ['done']], [])
       expect(testee.getLastDailyForEventlist()).to.be.null
