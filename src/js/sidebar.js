@@ -33,11 +33,11 @@ window.onload = function () {
         const cfdAnalyzer = new CfdAnalyzer(columnDefinitions, data)
         if (filterBefore) {
           data = data.filter(item => item.getTimestamp() >= filterBefore)
-          cfdAnalyzer.endAtDate = filterBefore
+          cfdAnalyzer.startAtDate = filterBefore
         }
         if (filterAfter) {
           data = data.filter(item => item.getTimestamp() <= filterAfter)
-          cfdAnalyzer.startAtDate = filterAfter
+          cfdAnalyzer.endAtDate = filterAfter
         }
         console.log('after filter')
         console.log(data)
