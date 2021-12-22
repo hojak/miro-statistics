@@ -72,10 +72,29 @@
         </div>
     </div>
 
-    <h2>Show CFD File</h2>
+    <h2>Show CFD</h2>
     <textarea name="cfd_groups" id="cfd_groups" placeholder="list colums for the cfd, each line is a group and may contain a comma-separated list of drop fields"></textarea>
     <div class="button_group">
         <input id="button_show_cfd" value="show CFD" type="button"/>
+    </div>
+
+
+    <h2>Show LTD Chart</h2>
+    <p>Takes all Cards where the last event is the placement in the definied done column into a lead time distribution chart.
+        The lead time of each card is the timespan from the first event until the placement in the done column. You can ignore
+    columns by listing them in the corresponding textarea.</p>
+    <div class="input_group">
+        <label for="ltd_done_column">Done-Column:</label>
+        <input type="text" id="ltd_done_column" name="ltd_done_column" placeholder="done">
+    </div>
+
+    <div class="input_group">
+        <label for="ltd_ignore_columns">Ignore Columns (pre commitment):</label>
+        <textarea name="ltd_ignore_columns" id="ltd_ignore_columns" placeholder="list colums to ignore, e.g. backlog"></textarea>
+    </div>
+
+    <div class="button_group">
+        <input id="button_show_ltd" value="show LTD" type="button"/>
     </div>
 
 </body>
