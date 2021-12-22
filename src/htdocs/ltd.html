@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Kanban LTD Chart</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    #id {
+      width: 100%;
+      height: 90vh;
+    }
+
+    #my_chart {
+      width:100%;
+      height: 100%;
+    }
+
+  </style>
+</head>
+
+<body>
+  <h1>Kanban LTD Chart</h1>
+
+  <div id="chart">
+    <canvas id="my_chart"></canvas>
+  </div>
+
+<script>
+var inputData = [
+  {
+    leadTime: 2,
+    title: "a card",
+    type: "type 1",
+    finished: "2021-12-12 12:00"
+  },
+  {
+    leadTime: 1,
+    title: "a card",
+    type: "type 1",
+    finished: "2021-12-12 12:00"
+  },  
+  {
+    leadTime: 5,
+    title: "a card",
+    type: "type 2",
+    finished: "2021-12-12 12:00"
+  },
+  {
+    leadTime: 2,
+    title: "a card",
+    type: "type 2",
+    finished: "2021-12-12 12:00"
+  }
+]
+  
+
+const CHART_COLORS = [
+  'rgb(255, 99, 132)',
+  'rgb(255, 159, 64)',
+  'rgb(255, 205, 86)',
+  'rgb(75, 192, 192)',
+  'rgb(54, 162, 235)',
+  'rgb(153, 102, 255)',
+  'rgb(201, 203, 207)'
+];
+
+function getChartDataForInput () {
+  let typeToDataset = {}
+  let typeColorIndex = 0
+  let leadTime2Count = {}
+
+  inputData.forEach( dataAboutFinishedCard => {
+    const type = dataAboutFinishedCard.type
+    if ( !typeToDataset.hasOwnProperty(type)) {
+      typeToDataset[type] = {
+        label: type,
+        pointStyle: 'circle',
+        pointRadius: 6,
+        backgroundColor: CHART_COLORS[typeColorIndex].replace (')', ',0.5)'),
+        borderColor: CHART_COLORS[typeColorIndex],
+        data: []
+      }
+      typeColorIndex++
+      typeColorIndex %= CHART_COLORS.length
+    }
+
+    if ( ! leadTime2Count.hasOwnProperty(dataAboutFinishedCard.leadTime)) {
+      leadTime2Count[dataAboutFinishedCard.leadTime] = 0
+    }
+
+    leadTime2Count[dataAboutFinishedCard.leadTime] ++
+
+    typeToDataset[type]['data'].push ( {
+      x: dataAboutFinishedCard.leadTime,
+      y: leadTime2Count[dataAboutFinishedCard.leadTime],
+      label: dataAboutFinishedCard.title + ', finshed: ' + dataAboutFinishedCard.finished
+    })
+  })
+
+  return { 
+    labels: Object.keys ( typeToDataset ),
+    datasets: Object.values ( typeToDataset) 
+  }
+}
+
+
+var ltdChart;
+window.onload = function () {
+  const data =  getChartDataForInput () 
+
+  const config = {
+    type: 'scatter',
+    data: data,
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: (ctx) => 'Kanban LTD Chart'
+        },
+        tooltip: {
+          mode: 'index'
+        },
+      },
+      interaction: {
+        mode: 'point',
+      },
+      scales: {
+        grid: { display: false, },
+        x: {
+          type: 'linear',
+          position: 'bottom',
+          min: 0,
+          title: {        
+            display: true,
+            text: 'Number of Days'
+          },
+          ticks: {
+            stepSize: 1
+          }
+        },
+        y: {
+          stacked: false,
+          min: 0,
+          title: {
+            display: true,
+            text: 'Number of Cards'
+          },
+          ticks: {
+            stepSize: 1
+          }
+        }
+      },
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: function ( ctx)  {
+              //console.log (  ctx )
+              let label = ctx.dataset.data [ctx.dataIndex].label
+              if ( ! label ) {
+                label = ctx.dataset.data [ctx.dataIndex].x + " day(s)"
+              }
+              return label
+            }
+          }
+        }
+      }
+    }
+  }
+
+  const ctx = document.getElementById('my_chart').getContext('2d');
+  ltdChart = new Chart(ctx, config);
+}
+</script>
+
+</body>
+
+</html>
