@@ -23,11 +23,6 @@ window.onload = function () {
     const filterBefore = getBeforeTimestamp()
     const filterAfter = getAfterTimestamp()
 
-    console.log(filterBefore)
-    console.log(new Date(filterBefore))
-    console.log(filterAfter)
-    console.log(new Date(filterAfter))
-
     controller.getChronologicalEventList().then(
       data => {
         const cfdAnalyzer = new CfdAnalyzer(columnDefinitions, data)
@@ -39,8 +34,6 @@ window.onload = function () {
           data = data.filter(item => item.getTimestamp() <= filterAfter)
           cfdAnalyzer.endAtDate = filterAfter
         }
-        console.log('after filter')
-        console.log(data)
 
         const cfdData = cfdAnalyzer.getCfdData()
 
