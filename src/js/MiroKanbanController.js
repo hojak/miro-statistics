@@ -19,8 +19,45 @@ class MiroKanbanController {
     return await this.miro.board.widgets.get({ type: 'CARD' })
   }
 
+  getAllCardEventlists (cardData) {
+    return cardData.map(
+      card => MiroTextHelper.extractEventList(card.description, card.id)
+    )
+  }
+
+  getDescriptionForCard (miroCardData) {
+    console.log(miroCardData)
+
+    const eventList = MiroTextHelper.extractEventList(miroCardData.description, miroCardData.id)
+    if (eventList.getItems().length === 0) {
+      return null
+    }
+
+    return {
+      id: miroCardData.id,
+      title: this.removeHtml(miroCardData.title),
+      timeOfLastEvent: '' + new Date(eventList.getItems().slice(-1)[0].getTimestamp()),
+      type: 'Card'
+    }
+  }
+
+  getDescriptionMapForCards (cardData) {
+    const result = {}
+
+    cardData.forEach(
+      miroCard => {
+        const description = this.getDescriptionForCard(miroCard)
+        if (description != null) {
+          result[description.id] = description
+        }
+      }
+    )
+
+    return result
+  }
+
   getEventlistOfCards (miroCardData) {
-    return miroCardData.map(card => MiroTextHelper.extractEventList(card.description, card.id))
+    return this.getAllCardEventlists(miroCardData)
       .flatMap(eventList => eventList.getItems())
       .sort((eventA, eventB) => eventA.getTimestamp() - eventB.getTimestamp())
   }

@@ -4,6 +4,7 @@
 
 const MiroKanbanController = require('./MiroKanbanController')
 const CfdAnalyzer = require('./CfdAnalyzer')
+const LtdAnalyzer = require('./LtdAnalyzer')
 
 const controller = new MiroKanbanController(miro)
 
@@ -40,6 +41,10 @@ window.onload = function () {
         showCfd(columnDefinitions, cfdAnalyzer.getTimestampsOfDaylies().map(ts => new Date(ts).toLocaleString()), cfdData)
       }
     )
+  }
+
+  document.getElementById('button_show_ltd').onclick = function () {
+    controller.getAllCards().then(showLtdForEventList)
   }
 }
 
@@ -95,4 +100,45 @@ function jsFriendlyJSONStringify (s) {
   return JSON.stringify(s)
     .replace(/\u2028/g, '\\u2028')
     .replace(/\u2029/g, '\\u2029')
+}
+
+function showLtdForEventList (cardData) {
+  const doneColumn = document.getElementById('ltd_done_column').value
+  const ignoreColumns = document.getElementById('ltd_ignore_columns').value.split('\n')
+
+  const ltdAnalyzer = new LtdAnalyzer(doneColumn, ignoreColumns)
+
+  const cardDescriptionMap = controller.getDescriptionMapForCards(cardData, doneColumn)
+  const cardEventLists = controller.getAllCardEventlists(cardData)
+
+  ltdAnalyzer.setCardDescriptionMap(cardDescriptionMap)
+
+  const ltdData = ltdAnalyzer.getLeadtimeData(cardEventLists)
+
+  let htmlContent = null
+  const xmlhttp = new XMLHttpRequest()
+  xmlhttp.open('GET', 'ltd.html', false)
+  xmlhttp.send()
+  if (xmlhttp.status === 200) {
+    htmlContent = xmlhttp.responseText
+  } else {
+    htmlContent = '<html><body>Error</body></html>'
+  }
+
+  htmlContent = htmlContent.replace(
+    '</body>',
+    getJsCodeForLtd(ltdData) + '</body>'
+  )
+
+  const urlContent = URL.createObjectURL(
+    new Blob([htmlContent], { type: 'text/html' })
+  )
+
+  window.open(urlContent, '_blank')
+}
+
+function getJsCodeForLtd (ltdData) {
+  return '<script>' +
+    '  inputData = ' + jsFriendlyJSONStringify(ltdData) + '\n' +
+  '</script>'
 }
