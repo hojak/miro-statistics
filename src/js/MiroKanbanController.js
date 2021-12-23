@@ -25,7 +25,8 @@ class MiroKanbanController {
     )
   }
 
-  getDescriptionForCard (miroCardData) {
+
+  getDescriptionForCard (miroCardData, typeTags) {
     console.log(miroCardData)
 
     const eventList = MiroTextHelper.extractEventList(miroCardData.description, miroCardData.id)
@@ -33,20 +34,34 @@ class MiroKanbanController {
       return null
     }
 
+    const type = this.getTypeOfCard(miroCardData, typeTags)
+
     return {
       id: miroCardData.id,
       title: this.removeHtml(miroCardData.title),
-      timeOfLastEvent: '' + new Date(eventList.getItems().slice(-1)[0].getTimestamp()),
-      type: 'Card'
+      timeOfLastEvent: new Date(eventList.getItems().slice(-1)[0].getTimestamp()).toLocaleDateString(),
+      type: type
     }
   }
 
-  getDescriptionMapForCards (cardData) {
+  getTypeOfCard(miroCardData, typeTags) {
+    let type = null
+    miroCardData.tags.map(tag => tag.title).forEach(
+      tag => {
+        if (type === null && typeTags.includes(tag)) {
+          type = tag
+        }
+      }
+    )
+    return type
+  }
+
+  getDescriptionMapForCards (cardData, typeTags) {
     const result = {}
 
     cardData.forEach(
       miroCard => {
-        const description = this.getDescriptionForCard(miroCard)
+        const description = this.getDescriptionForCard(miroCard, typeTags)
         if (description != null) {
           result[description.id] = description
         }

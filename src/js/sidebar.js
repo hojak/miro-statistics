@@ -105,11 +105,14 @@ function jsFriendlyJSONStringify (s) {
 function showLtdForEventList (cardData) {
   const doneColumn = document.getElementById('ltd_done_column').value
   const ignoreColumns = document.getElementById('ltd_ignore_columns').value.split('\n')
+  const typeTags = document.getElementById('ltd_type_tags').value.split('\n')
 
   const ltdAnalyzer = new LtdAnalyzer(doneColumn, ignoreColumns)
 
-  const cardDescriptionMap = controller.getDescriptionMapForCards(cardData, doneColumn)
+  const cardDescriptionMap = controller.getDescriptionMapForCards(cardData, typeTags)
   const cardEventLists = controller.getAllCardEventlists(cardData)
+
+  console.log ( cardDescriptionMap )
 
   ltdAnalyzer.setCardDescriptionMap(cardDescriptionMap)
 
