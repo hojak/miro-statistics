@@ -5,8 +5,8 @@ class ItemEventList {
   static get ERROR_NEIGHBOR_CONFLICT () { return 'neighbor conflict' }
   static get EVENT_SEPARATOR () { return ',</p><p>' }
 
-  constructor () {
-    this.items = []
+  constructor (items = []) {
+    this.items = items
   }
 
   getSize () {
