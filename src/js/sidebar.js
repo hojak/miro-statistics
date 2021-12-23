@@ -112,8 +112,6 @@ function showLtdForEventList (cardData) {
   const cardDescriptionMap = controller.getDescriptionMapForCards(cardData, typeTags)
   const cardEventLists = controller.getAllCardEventlists(cardData)
 
-  console.log ( cardDescriptionMap )
-
   ltdAnalyzer.setCardDescriptionMap(cardDescriptionMap)
 
   const ltdData = ltdAnalyzer.getLeadtimeData(cardEventLists)

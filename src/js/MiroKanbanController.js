@@ -27,8 +27,6 @@ class MiroKanbanController {
 
 
   getDescriptionForCard (miroCardData, typeTags) {
-    console.log(miroCardData)
-
     const eventList = MiroTextHelper.extractEventList(miroCardData.description, miroCardData.id)
     if (eventList.getItems().length === 0) {
       return null
