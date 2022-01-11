@@ -91,7 +91,7 @@ class MiroKanbanController {
 
   async getChronologicalEventList () {
     const $this = this
-    return await $this.getAllCards().then($this.getEventlistOfCards)
+    return await $this.getAllCards().then(data => $this.getEventlistOfCards(data))
   }
 
   removeHtml (text) {
