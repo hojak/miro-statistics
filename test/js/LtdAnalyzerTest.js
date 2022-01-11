@@ -110,5 +110,4 @@ describe('LtdAnalyzer', function () {
       })
     })
   })
-
 })
