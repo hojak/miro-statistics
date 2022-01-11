@@ -70,7 +70,8 @@ class MiroKanbanController {
   }
 
   getEventlistOfCards (miroCardData) {
-    return this.getAllCardEventlists(miroCardData)
+    const $this = this
+    return $this.getAllCardEventlists(miroCardData)
       .flatMap(eventList => eventList.getItems())
       .sort((eventA, eventB) => eventA.getTimestamp() - eventB.getTimestamp())
   }
