@@ -41,10 +41,11 @@ class MiroMainRegistrator {
 
     $this.miro.initialize({
       extensionPoints: {
-        bottomBar: async () => {
+        toolbar: async () => {
           return {
             title: 'Kanban Metrics WebApp',
-            svgIcon: icon,
+            librarySvgIcon: icon,
+            toolbarSvgIcon: icon,
             onClick: () => $this.openSidebar()
           }
         },
