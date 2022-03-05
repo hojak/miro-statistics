@@ -1,4 +1,5 @@
 # Miro App: Kanban Statistics
+
 This small projects adds tools for managing and analyzing a kanban board on virtual whiteboard in https://miro.com.
 
 ## Development
@@ -12,8 +13,8 @@ npm run test
 npm run lint
 ```
 
-
 ### Run a Local Version
+
 Provide a the application on a simple local web server
 
 ```sh
@@ -22,10 +23,13 @@ npm run local
 
 Afterwards, the result is available at the address http://localhost:8088
 
+You can now follow the instructions in section "3. Create an app" of
+[miro: How to build a web-plugin](https://developers.miro.com/docs/how-to-start#3-create-an-app).
 
 ### Testing
 
-To run all tests once simply state 
+To run all tests once simply state
+
 ```sh
 npm run test
 ```
@@ -64,8 +68,8 @@ The root cause of the problem is, that npm scripts are run in the default shell,
 
 You can change this by configuring npm to use a different shell, e.g. the git bash:
 
-```
+```sh
 npm config set script-shell "C:\\Program Files\\Git\\bin\\bash.exe"
 ```
 
-*By the way, you can remove this directory by using ```rmdir ./-p``` - but you got this covered already, didn't you?*
+*By the way, you can remove this directory by using `rmdir ./-p` - but you got this covered already, didn't you?*
