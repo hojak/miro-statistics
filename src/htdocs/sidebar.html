@@ -41,15 +41,15 @@
 
     <h1>Kanban Statistics Plugin</h1>
 
-    <h2>To collect statistics in the background:</h2>
+    <h2>To collect statistics automatically:</h2>
 
     <ul>
-        <li>Create shapes for Kanban Lanes.</li>
-        <li>Mark these shapes with [&lt;name&gt;].</li>
-        <li>drag card widgets on this shapes.</li>
+        <li>Create a shape per Kanban column.</li>
+        <li>Set text of shapes to [&lt;name&gt;].</li>
+        <li>Drag card widgets on these shapes.</li>
     </ul>
 
-    <p>The timestamps and the name of the shape will be added into a metrics block in the description of the card.</p>
+    <p>The timestamps and the name of the shape (i.e. column name) will be added into a metrics block in the description of the card.</p>
 
 
     <div class="button_group">
@@ -63,26 +63,28 @@
     <div class="input_group">
         <div class="input_group">
             <label for="start_date">Start at date:</label>
-            <input type="text" id="start_date" name="start_date" placeholder="2021-01-01">
+            <input type="text" id="start_date" name="start_date" placeholder="2022-01-01">
         </div>
 
         <div class="input_group">
             <label for="end_date">End at date:</label>
-            <input type="text" id="end_date" name="end_date" placeholder="2021-12-31">
+            <input type="text" id="end_date" name="end_date" placeholder="2022-12-31">
         </div>
     </div>
 
     <h2>Show CFD</h2>
-    <textarea name="cfd_groups" id="cfd_groups" placeholder="list colums for the cfd, each line is a group and may contain a comma-separated list of drop fields"></textarea>
+    <textarea name="cfd_groups" id="cfd_groups" placeholder="list colums for the cfd, each line is a group and may contain a comma-separated list of column names"></textarea>
     <div class="button_group">
-        <input id="button_show_cfd" value="show CFD" type="button"/>
+        <input id="button_show_cfd" value="Show CFD" type="button"/>
     </div>
 
 
-    <h2>Show LTD Chart</h2>
-    <p>Takes all Cards where the last event is the placement in the definied done column into a lead time distribution chart.
-        The lead time of each card is the timespan from the first event until the placement in the done column. You can ignore
-    columns by listing them in the corresponding textarea.</p>
+    <h2>Show LTD</h2>
+    <p>Creates a lead time diagram. The LTD considers all cards which where placed into the "Done-Column" at some point.
+        The lead time of each card is the timespan from the first event until the placement in the done column.
+        You can ignore columns by listing them in the "Ignore Columns" text field - one column name per line.
+        Every card must have a tag to identify the card type (e.g. "Meeting", "Learning", "Working"). The card
+        type tags are entered below.</p>
     <div class="input_group">
         <label for="ltd_done_column">Done-Column:</label>
         <input type="text" id="ltd_done_column" name="ltd_done_column" placeholder="done">
@@ -94,12 +96,12 @@
     </div>
 
     <div class="input_group">
-        <label for="ltd_type_tags">list of tags unterpreted as card types:</label>
+        <label for="ltd_type_tags">List of tags interpreted as card types:</label>
         <textarea name="ltd_type_tags" id="ltd_type_tags" placeholder="TagName(s)"></textarea>
     </div>
 
     <div class="button_group">
-        <input id="button_show_ltd" value="show LTD" type="button"/>
+        <input id="button_show_ltd" value="Show LTD" type="button"/>
     </div>
 
 </body>
