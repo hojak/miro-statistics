@@ -4,6 +4,7 @@ const Point = require('../../src/js/Point')
 const MiroKanbanController = require('../../src/js/MiroKanbanController')
 const { ERROR_NEIGHBOR_CONFLICT } = require('../../src/js/ItemEventList')
 const { START_EVENT_LIST, END_EVENT_LIST } = require('../../src/js/MiroTextHelper')
+const ItemEventList = require('../../src/js/ItemEventList')
 
 describe('MiroKanbanController', function () {
 
@@ -27,7 +28,7 @@ describe('MiroKanbanController', function () {
 
             let collectedStrings = "";
             console.log = function ( s ) { collectedStrings += s }
-            expect ( miroKanbanController.getAllCardEventlists (cardData)).to.deep.equal ( [null]) 
+            expect ( miroKanbanController.getAllCardEventlists (cardData)).to.deep.equal ( [new ItemEventList()]) 
             expect ( collectedStrings ).to.contain (cardData[0].name)
         })
     })

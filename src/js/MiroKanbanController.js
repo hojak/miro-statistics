@@ -1,3 +1,4 @@
+const ItemEventList = require('./ItemEventList')
 const MiroTextHelper = require('./MiroTextHelper')
 class MiroKanbanController {
   constructor (miro) {
@@ -26,7 +27,7 @@ class MiroKanbanController {
           return MiroTextHelper.extractEventList(card.description, card.id)
         } catch ( error ) {
           console.log ( "Error in Eventlist of " + card.name)
-          return null;
+          return new ItemEventList();
         }
       }
     )
