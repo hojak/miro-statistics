@@ -22,11 +22,11 @@ class MiroKanbanController {
 
   getAllCardEventlists (cardData) {
     return cardData.map(
-      card => { 
+      function (card) { 
         try {
           return MiroTextHelper.extractEventList(card.description, card.id)
         } catch ( error ) {
-          console.log ( "Error in Eventlist of " + card.name)
+          console.log ( "Error in Eventlist of '" + card.title + "'" )
           return new ItemEventList();
         }
       }

@@ -20,7 +20,7 @@ describe('MiroKanbanController', function () {
         it('must not propagate a neighbor conflict', function () {
             const cardData = [
                 {
-                    name: 'errorprone card',
+                    title: 'errorprone card',
                     description:  START_EVENT_LIST + '<p>work: 2021-07-10 10:00,</p><p>work: 2021-08-10 11:00,</p><p>done: 2021-08-10 13:00</p>' + END_EVENT_LIST,
                     id: 123
                 },
@@ -29,7 +29,7 @@ describe('MiroKanbanController', function () {
             let collectedStrings = "";
             console.log = function ( s ) { collectedStrings += s }
             expect ( miroKanbanController.getAllCardEventlists (cardData)).to.deep.equal ( [new ItemEventList()]) 
-            expect ( collectedStrings ).to.contain (cardData[0].name)
+            expect ( collectedStrings ).to.contain (cardData[0].title)
         })
     })
 })
