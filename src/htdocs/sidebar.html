@@ -8,14 +8,26 @@
 
   <style>
       body {
-          padding: 5px;
-          overflow: scroll;
+          padding: 0px;
+          margin: 0px;
       }
 
       html {
           font-family: Arial, Helvetica, sans-serif;
           padding: 0;
           margin: 0;
+      }
+
+      div.outer-scroll {
+        width: 97vw;
+        height: 97vh;
+        padding: 5px;
+        overflow: scroll;
+      }
+
+      div.inner-scroll {
+        width: 100%;
+        height: auto;
       }
 
       h1 {
@@ -38,6 +50,9 @@
 </head>
 
 <body>
+
+    <div class="outer-scroll">
+        <div class="inner-scroll">
 
     <h1>Kanban Statistics Plugin</h1>
 
@@ -104,6 +119,8 @@
         <input id="button_show_ltd" value="Show LTD" type="button"/>
     </div>
 
+        </div>
+    </div>
 </body>
 
 </html>
