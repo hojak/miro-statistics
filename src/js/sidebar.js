@@ -14,8 +14,24 @@ window.onload = function () {
   addShowCfdClickHandler()
 
   addShowLfdClickHandler()
+
+  initializeCardStatusSelect()
+
+
+  function initializeCardStatusSelect () {
+    // todo
+    const listOfStates = ['ready','doing', 'done']
+
+    const select = document.getElementById('card_status')
+    select.innerHTML = '';
+
+    listOfStates.forEach( item => {
+      var option = document.createElement('option')
+      option.innerHTML = item
+      select.appendChild(option)
     })
   }
+
 
   function addShowLfdClickHandler() {
     document.getElementById('button_show_ltd').onclick = function () {
@@ -24,30 +40,30 @@ window.onload = function () {
   }
 
   function addShowCfdClickHandler() {
-  document.getElementById('button_show_cfd').onclick = function () {
-    const columnDefinitions = document.getElementById('cfd_groups').value.split('\n').map(entry => entry.split(','))
+    document.getElementById('button_show_cfd').onclick = function () {
+      const columnDefinitions = document.getElementById('cfd_groups').value.split('\n').map(entry => entry.split(','))
 
-    const filterBefore = getBeforeTimestamp()
-    const filterAfter = getAfterTimestamp()
+      const filterBefore = getBeforeTimestamp()
+      const filterAfter = getAfterTimestamp()
 
-    controller.getChronologicalEventList().then(
-      data => {
-        const cfdAnalyzer = new CfdAnalyzer(columnDefinitions, data)
-        if (filterBefore) {
-          data = data.filter(item => item.getTimestamp() >= filterBefore)
-          cfdAnalyzer.startAtDate = filterBefore
+      controller.getChronologicalEventList().then(
+        data => {
+          const cfdAnalyzer = new CfdAnalyzer(columnDefinitions, data)
+          if (filterBefore) {
+            data = data.filter(item => item.getTimestamp() >= filterBefore)
+            cfdAnalyzer.startAtDate = filterBefore
+          }
+          if (filterAfter) {
+            data = data.filter(item => item.getTimestamp() <= filterAfter)
+            cfdAnalyzer.endAtDate = filterAfter
+          }
+
+          const cfdData = cfdAnalyzer.getCfdData()
+
+          showCfd(columnDefinitions, cfdAnalyzer.getTimestampsOfDaylies().map(ts => new Date(ts).toLocaleString()), cfdData)
         }
-        if (filterAfter) {
-          data = data.filter(item => item.getTimestamp() <= filterAfter)
-          cfdAnalyzer.endAtDate = filterAfter
-        }
-
-        const cfdData = cfdAnalyzer.getCfdData()
-
-        showCfd(columnDefinitions, cfdAnalyzer.getTimestampsOfDaylies().map(ts => new Date(ts).toLocaleString()), cfdData)
-      }
-    )
-  }
+      )
+    }
   }
 
   function addExportCsvClickHandler() {
