@@ -32,4 +32,25 @@ describe('MiroKanbanController', function () {
             expect ( collectedStrings ).to.contain (cardData[0].title)
         })
     })
+
+
+    describe ('getAllEventStates', function () {
+        it ( 'has to return the expected list of states', function () {
+            const cardData = [
+                {
+                    title: 'some card',
+                    description:  START_EVENT_LIST + '<p>test: 2021-07-10 10:00,</p><p>work: 2021-08-10 11:00,</p><p>done: 2021-08-10 13:00</p>' + END_EVENT_LIST,
+                    id: 123
+                },
+                {
+                    title: 'another card',
+                    description:  START_EVENT_LIST + '<p>review: 2021-08-10 13:00</p>' + END_EVENT_LIST,
+                    id: 123
+                },
+            ]
+
+            const expected = ['done', 'review', 'test', 'work']
+            expect (miroKanbanController.getAllEventStates()).to.deep.equal (expected)
+        })
+    })
 })
