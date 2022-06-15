@@ -9,15 +9,21 @@ const LtdAnalyzer = require('./LtdAnalyzer')
 const controller = new MiroKanbanController(miro)
 
 window.onload = function () {
-  document.getElementById('button_export_csv').onclick = function () {
-    controller.getCsvData().then(data => {
-      const universalBOM = '\uFEFF'
-      const csvFile =
-      'data:text/csv; charset=utf-8,' + encodeURIComponent(universalBOM + data)
-      window.open(csvFile)
+  addExportCsvClickHandler()
+
+  addShowCfdClickHandler()
+
+  addShowLfdClickHandler()
     })
   }
 
+  function addShowLfdClickHandler() {
+    document.getElementById('button_show_ltd').onclick = function () {
+      controller.getAllCards().then(showLtdForEventList)
+    }
+  }
+
+  function addShowCfdClickHandler() {
   document.getElementById('button_show_cfd').onclick = function () {
     const columnDefinitions = document.getElementById('cfd_groups').value.split('\n').map(entry => entry.split(','))
 
@@ -42,9 +48,16 @@ window.onload = function () {
       }
     )
   }
+  }
 
-  document.getElementById('button_show_ltd').onclick = function () {
-    controller.getAllCards().then(showLtdForEventList)
+  function addExportCsvClickHandler() {
+    document.getElementById('button_export_csv').onclick = function () {
+      controller.getCsvData().then(data => {
+        const universalBOM = '\uFEFF'
+        const csvFile = 'data:text/csv; charset=utf-8,' + encodeURIComponent(universalBOM + data)
+        window.open(csvFile)
+      })
+    }
   }
 }
 
