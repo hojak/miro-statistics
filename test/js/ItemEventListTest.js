@@ -126,9 +126,9 @@ describe('ItemEventList', function () {
       })
     })
 
-    it ('has to throw an exception for neighbor conflicts', function () {
+    it('has to throw an exception for neighbor conflicts', function () {
       const eventlistWithNeighborConflict = '<p>work: 2021-07-10 10:00,</p><p>work: 2021-08-10 11:00,</p><p>done: 2021-08-10 13:00</p>'
-      expect ( function () { ItemEventList.createFromMiroString (eventlistWithNeighborConflict) } ).to.throw(ERROR_NEIGHBOR_CONFLICT)
+      expect(function () { ItemEventList.createFromMiroString(eventlistWithNeighborConflict) }).to.throw(ERROR_NEIGHBOR_CONFLICT)
     })
   })
 

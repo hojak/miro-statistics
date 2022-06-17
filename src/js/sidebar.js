@@ -16,43 +16,40 @@ window.onload = function () {
 
   addShowLfdClickHandler()
 
-  addShowCardsOfStatusClickHandler ()
+  addShowCardsOfStatusClickHandler()
 
   initializeCardStatusSelect()
 
-
   function initializeCardStatusSelect () {
-    controller.getAllEventStates().then ( listOfStates => {
+    controller.getAllEventStates().then(listOfStates => {
       const select = document.getElementById('card_status')
-      select.innerHTML = '';
-  
-      listOfStates.forEach( item => {
-        var option = document.createElement('option')
+      select.innerHTML = ''
+
+      listOfStates.forEach(item => {
+        const option = document.createElement('option')
         option.innerHTML = item
         select.appendChild(option)
       })
     })
   }
 
-
-  function addShowCardsOfStatusClickHandler() {
+  function addShowCardsOfStatusClickHandler () {
     document.getElementById('button_show_cards_in_selected_status').onclick = function () {
-      let selectedStatus = document.getElementById('card_status').value
+      const selectedStatus = document.getElementById('card_status').value
 
       controller.getAllCards()
-        .then(listOfCards => listOfCards.filter( miroCard => isCardInSelectedStatus(miroCard, selectedStatus)))
+        .then(listOfCards => listOfCards.filter(miroCard => isCardInSelectedStatus(miroCard, selectedStatus)))
         .then(showListOfCards)
     }
   }
 
-
-  function addShowLfdClickHandler() {
+  function addShowLfdClickHandler () {
     document.getElementById('button_show_ltd').onclick = function () {
       controller.getAllCards().then(showLtdForEventList)
     }
   }
 
-  function addShowCfdClickHandler() {
+  function addShowCfdClickHandler () {
     document.getElementById('button_show_cfd').onclick = function () {
       const columnDefinitions = document.getElementById('cfd_groups').value.split('\n').map(entry => entry.split(','))
 
@@ -79,7 +76,7 @@ window.onload = function () {
     }
   }
 
-  function addExportCsvClickHandler() {
+  function addExportCsvClickHandler () {
     document.getElementById('button_export_csv').onclick = function () {
       controller.getCsvData().then(data => {
         const universalBOM = '\uFEFF'
@@ -186,20 +183,19 @@ function getJsCodeForLtd (ltdData) {
   '</script>'
 }
 
-
-function showListOfCards ( listOfCards ) {
-  let listElement = document.getElementById('list_of_cards')
+function showListOfCards (listOfCards) {
+  const listElement = document.getElementById('list_of_cards')
 
   listElement.innerHTML = ''
-  
-  listOfCards.forEach ( card => {
+
+  listOfCards.forEach(card => {
     const newEntry = document.createElement('li')
-    newEntry.innerHTML = controller.removeHtml(card.title )
-    
-    const button = document.createElement ('input')
+    newEntry.innerHTML = controller.removeHtml(card.title)
+
+    const button = document.createElement('input')
     button.setAttribute('value', 'show')
-    button.setAttribute('type','button')
-    button.onclick = function () { controller.showCard ( card.id )}
+    button.setAttribute('type', 'button')
+    button.onclick = function () { controller.showCard(card.id) }
 
     newEntry.appendChild(button)
 
@@ -207,14 +203,13 @@ function showListOfCards ( listOfCards ) {
   })
 }
 
-
-function isCardInSelectedStatus(miroCard, selectedStatus) {
-    try {
-      const eventList = MiroTextHelper.extractEventList(miroCard.description, miroCard.id)
-      return eventList.getSize() > 0 
-        && eventList.items.at(-1).getNewStatus() == selectedStatus
-    } catch (error) {
-      console.log ( "Error in Eventlist of '" + miroCard.title + "': " + error )
-      return false
-    }
+function isCardInSelectedStatus (miroCard, selectedStatus) {
+  try {
+    const eventList = MiroTextHelper.extractEventList(miroCard.description, miroCard.id)
+    return eventList.getSize() > 0 &&
+        eventList.items.at(-1).getNewStatus() == selectedStatus
+  } catch (error) {
+    console.log("Error in Eventlist of '" + miroCard.title + "': " + error)
+    return false
+  }
 }
