@@ -3,6 +3,7 @@
 /* global Blob */
 
 const MiroKanbanController = require('./MiroKanbanController')
+const MiroTextHelper = require('./MiroTextHelper')
 const CfdAnalyzer = require('./CfdAnalyzer')
 const LtdAnalyzer = require('./LtdAnalyzer')
 
@@ -39,7 +40,7 @@ window.onload = function () {
       let selectedStatus = document.getElementById('card_status').value
 
       controller.getAllCards()
-        .then(listOfCards => listOfCards.filter( entry => true))
+        .then(listOfCards => listOfCards.filter( miroCard => isCardInSelectedStatus(miroCard, selectedStatus)))
         .then(showListOfCards)
     }
   }
@@ -204,4 +205,16 @@ function showListOfCards ( listOfCards ) {
 
     listElement.appendChild(newEntry)
   })
+}
+
+
+function isCardInSelectedStatus(miroCard, selectedStatus) {
+    try {
+      const eventList = MiroTextHelper.extractEventList(miroCard.description, miroCard.id)
+      return eventList.getSize() > 0 
+        && eventList.items.at(-1).getNewStatus() == selectedStatus
+    } catch (error) {
+      console.log ( "Error in Eventlist of '" + miroCard.title + "': " + error )
+      return false
+    }
 }
