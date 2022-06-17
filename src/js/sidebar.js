@@ -15,6 +15,8 @@ window.onload = function () {
 
   addShowLfdClickHandler()
 
+  addShowCardsOfStatusClickHandler ()
+
   initializeCardStatusSelect()
 
 
@@ -29,6 +31,17 @@ window.onload = function () {
         select.appendChild(option)
       })
     })
+  }
+
+
+  function addShowCardsOfStatusClickHandler() {
+    document.getElementById('button_show_cards_in_selected_status').onclick = function () {
+      let selectedStatus = document.getElementById('card_status').value
+
+      controller.getAllCards()
+        .then(listOfCards => listOfCards.filter( entry => true))
+        .then(showListOfCards)
+    }
   }
 
 
@@ -170,4 +183,25 @@ function getJsCodeForLtd (ltdData) {
   return '<script>' +
     '  inputData = ' + jsFriendlyJSONStringify(ltdData) + '\n' +
   '</script>'
+}
+
+
+function showListOfCards ( listOfCards ) {
+  let listElement = document.getElementById('list_of_cards')
+
+  listElement.innerHTML = ''
+  
+  listOfCards.forEach ( card => {
+    const newEntry = document.createElement('li')
+    newEntry.innerHTML = controller.removeHtml(card.title )
+    
+    const button = document.createElement ('input')
+    button.setAttribute('value', 'show')
+    button.setAttribute('type','button')
+    button.onclick = function () { controller.showCard ( card.id )}
+
+    newEntry.appendChild(button)
+
+    listElement.appendChild(newEntry)
+  })
 }

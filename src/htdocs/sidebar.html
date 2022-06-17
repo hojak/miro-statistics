@@ -46,6 +46,28 @@
         height: 100px;
       }
 
+      ul.list_of_cards {
+        padding: 5px;
+        background-color: #e0e0e0;
+        list-style-type: none;
+      }
+
+      ul.list_of_cards li {
+        position: relative;
+        border: 1px solid black;
+        border-radius: 5px;
+        margin: 0px 0px 10px 0px;
+        padding: 5px 40px 5px 5px;
+        background-color: #a0a0a0; 
+        display: block;
+      }
+
+      ul.list_of_cards li input {
+        position: absolute;
+        top: 3px;
+        right: 5px;
+      }
+
   </style>
 </head>
 
@@ -129,6 +151,12 @@
         <div class="button_group">
             <input id="button_show_cards_in_selected_status" value="Show Cards" type="button"/>
         </div>
+
+        <ul id="list_of_cards" class="list_of_cards">
+
+        </ul>
+
+
 
         </div>
     </div>
