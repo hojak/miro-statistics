@@ -207,7 +207,7 @@ function isCardInSelectedStatus (miroCard, selectedStatus) {
   try {
     const eventList = MiroTextHelper.extractEventList(miroCard.description, miroCard.id)
     return eventList.getSize() > 0 &&
-        eventList.items.at(-1).getNewStatus() == selectedStatus
+        eventList.items.at(-1).getNewStatus() === selectedStatus
   } catch (error) {
     console.log("Error in Eventlist of '" + miroCard.title + "': " + error)
     return false

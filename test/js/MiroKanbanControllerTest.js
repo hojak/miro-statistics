@@ -1,8 +1,6 @@
 
-const { expect, assert } = require('chai')
-const Point = require('../../src/js/Point')
+const { expect } = require('chai')
 const MiroKanbanController = require('../../src/js/MiroKanbanController')
-const { ERROR_NEIGHBOR_CONFLICT } = require('../../src/js/ItemEventList')
 const { START_EVENT_LIST, END_EVENT_LIST } = require('../../src/js/MiroTextHelper')
 const ItemEventList = require('../../src/js/ItemEventList')
 
@@ -13,6 +11,7 @@ describe('MiroKanbanController', function () {
   describe('getAllCardEventlists', function () {
     it('has to return an empty list', function () {
       const cardData = []
+      /* eslint-disable no-unused-expressions */
       expect(miroKanbanController.getAllCardEventlists(cardData)).to.be.empty
     })
 
