@@ -104,7 +104,7 @@ class MiroKanbanController {
 
   async getAllEventStates () {
     const $this = this
-    return await $this.getAllCards().then($this.getStatesOfEventList)
+    return await $this.getAllCards().then(data => $this.getStatesOfEventList(data))
   }
 
 

@@ -19,16 +19,15 @@ window.onload = function () {
 
 
   function initializeCardStatusSelect () {
-    // todo
-    const listOfStates = ['ready','doing', 'done']
-
-    const select = document.getElementById('card_status')
-    select.innerHTML = '';
-
-    listOfStates.forEach( item => {
-      var option = document.createElement('option')
-      option.innerHTML = item
-      select.appendChild(option)
+    controller.getAllEventStates().then ( listOfStates => {
+      const select = document.getElementById('card_status')
+      select.innerHTML = '';
+  
+      listOfStates.forEach( item => {
+        var option = document.createElement('option')
+        option.innerHTML = item
+        select.appendChild(option)
+      })
     })
   }
 
