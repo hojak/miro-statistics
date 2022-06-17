@@ -22,12 +22,12 @@ class MiroKanbanController {
 
   getAllCardEventlists (cardData) {
     return cardData.map(
-      function (card) { 
+      function (card) {
         try {
           return MiroTextHelper.extractEventList(card.description, card.id)
-        } catch ( error ) {
-          console.log ( "Error in Eventlist of '" + card.title + "'" )
-          return new ItemEventList();
+        } catch (error) {
+          console.log("Error in Eventlist of '" + card.title + "'")
+          return new ItemEventList()
         }
       }
     )
@@ -100,6 +100,21 @@ class MiroKanbanController {
   async getChronologicalEventList () {
     const $this = this
     return await $this.getAllCards().then(data => $this.getEventlistOfCards(data))
+  }
+
+  async getAllEventStates () {
+    const $this = this
+    return await $this.getAllCards().then(data => $this.getStatesOfEventList(data))
+  }
+
+  async showCard (cardId) {
+    this.miro.board.viewport.zoomToObject(cardId)
+  }
+
+  getStatesOfEventList (miroCardData) {
+    const $this = this
+    // card -> eventlist -> list of all states -> unique by set -> create array -> sort
+    return [...new Set($this.getEventlistOfCards(miroCardData).map(event => event.getNewStatus()))].sort()
   }
 
   removeHtml (text) {
