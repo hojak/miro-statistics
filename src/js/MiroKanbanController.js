@@ -107,6 +107,10 @@ class MiroKanbanController {
     return await $this.getAllCards().then(data => $this.getStatesOfEventList(data))
   }
 
+  async showCard ( cardId ) {
+    this.miro.board.viewport.zoomToObject ( cardId )
+  }
+
 
   getStatesOfEventList ( miroCardData ) {
     const $this = this
