@@ -34,7 +34,7 @@ describe('MiroKanbanController', function () {
     })
 
 
-    describe ('getAllEventStates', function () {
+    describe ('getStatesOfEventList', function () {
         it ( 'has to return the expected list of states', function () {
             const cardData = [
                 {
@@ -50,7 +50,7 @@ describe('MiroKanbanController', function () {
             ]
 
             const expected = ['done', 'review', 'test', 'work']
-            expect (miroKanbanController.getAllEventStates()).to.deep.equal (expected)
+            expect (miroKanbanController.getStatesOfEventList(cardData)).to.deep.equal (expected)
         })
     })
 })

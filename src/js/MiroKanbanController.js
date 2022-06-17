@@ -102,6 +102,18 @@ class MiroKanbanController {
     return await $this.getAllCards().then(data => $this.getEventlistOfCards(data))
   }
 
+  async getAllEventStates () {
+    const $this = this
+    return await $this.getAllCards().then($this.getStatesOfEventList)
+  }
+
+
+  getStatesOfEventList ( miroCardData ) {
+    const $this = this
+    // card -> eventlist -> list of all states -> unique by set -> create array -> sort
+    return [... new Set($this.getEventlistOfCards(miroCardData).map( event => event.getNewStatus() ))].sort()
+  }
+
   removeHtml (text) {
     return text
       .replaceAll('<p>', '')
