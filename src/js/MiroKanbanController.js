@@ -1,13 +1,12 @@
 const ItemEventList = require('./ItemEventList')
 const MiroTextHelper = require('./MiroTextHelper')
-
 class MiroKanbanController {
-  constructor (miroBoard) {
-    this.miroBoard = miroBoard
+  constructor (miro) {
+    this.miro = miro
   }
 
   updateKanbanMetrics (cardWidgetData, kanbanShape) {
-    this.miroBoard.widgets.update([{
+    this.miro.board.widgets.update([{
       id: cardWidgetData[0].id,
       description: MiroTextHelper.registerStatusChange(
         cardWidgetData[0].description,
@@ -18,8 +17,7 @@ class MiroKanbanController {
   }
 
   async getAllCards () {
-    // BUG: board is sometimes undefined 
-    return await this.miroBoard.widgets.get({ type: 'CARD' })
+    return await this.miro.board.widgets.get({ type: 'CARD' })
   }
 
   getAllCardEventlists (cardData) {
@@ -110,7 +108,7 @@ class MiroKanbanController {
   }
 
   async showCard (cardId) {
-    this.miroBoard.viewport.zoomToObject(cardId)
+    this.miro.board.viewport.zoomToObject(cardId)
   }
 
   getStatesOfEventList (miroCardData) {

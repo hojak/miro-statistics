@@ -7,9 +7,7 @@ const MiroTextHelper = require('./MiroTextHelper')
 const CfdAnalyzer = require('./CfdAnalyzer')
 const LtdAnalyzer = require('./LtdAnalyzer')
 
-const { miroBoard } = window.miro
-
-const controller = new MiroKanbanController(miroBoard)
+const controller = new MiroKanbanController(miro)
 
 window.onload = function () {
   addExportCsvClickHandler()
@@ -20,7 +18,6 @@ window.onload = function () {
 
   addShowCardsOfStatusClickHandler()
 
-  // BUG: miro.board sometimes not ready here leading to an empty select field
   initializeCardStatusSelect()
 }
 
