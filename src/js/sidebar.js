@@ -9,7 +9,7 @@ const LtdAnalyzer = require('./LtdAnalyzer')
 
 const controller = new MiroKanbanController(miro)
 
-window.onload = function () {
+miro.onReady ( () => {
   addExportCsvClickHandler()
 
   addShowCfdClickHandler()
@@ -19,7 +19,7 @@ window.onload = function () {
   addShowCardsOfStatusClickHandler()
 
   initializeCardStatusSelect()
-}
+})
 
 
 function initializeCardStatusSelect () {
