@@ -9,7 +9,7 @@ const LtdAnalyzer = require('./LtdAnalyzer')
 
 const controller = new MiroKanbanController(miro)
 
-miro.onReady ( () => {
+miro.onReady(() => {
   addExportCsvClickHandler()
 
   addShowCfdClickHandler()
@@ -20,7 +20,6 @@ miro.onReady ( () => {
 
   initializeCardStatusSelect()
 })
-
 
 function initializeCardStatusSelect () {
   controller.getAllEventStates().then(listOfStates => {
@@ -87,7 +86,6 @@ function addExportCsvClickHandler () {
     })
   }
 }
-
 
 function getTimstampFromInput (htmlId) {
   const input = document.getElementById(htmlId).value
