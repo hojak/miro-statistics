@@ -5,8 +5,8 @@ const { START_EVENT_LIST, END_EVENT_LIST } = require('../../src/js/MiroTextHelpe
 const ItemEventList = require('../../src/js/ItemEventList')
 
 describe('MiroKanbanController', function () {
-  const miroMock = {}
-  const miroKanbanController = new MiroKanbanController(miroMock)
+  const miroBoardMock = {}
+  const miroKanbanController = new MiroKanbanController(miroBoardMock)
 
   describe('getAllCardEventlists', function () {
     it('has to return an empty list', function () {
