@@ -73,3 +73,23 @@ npm config set script-shell "C:\\Program Files\\Git\\bin\\bash.exe"
 ```
 
 *By the way, you can remove this directory by using `rmdir ./-p` - but you got this covered already, didn't you?*
+
+
+## Deployment
+
+### Option A: Run with npm.
+As mentioned above, you can publish the contents the documents for providing this plugin locally via npm:
+
+```bash
+npm run loal
+```
+
+This will start a webserver at port 8088 on the local machine and publish everything necessary. If this port is publically accessible, you can use the plugin anywhere; otherwise, you can only use the plugin locally in a browser on your machine.
+
+
+### Option B: Public with any webserver
+
+After building (run `npm run build`) you can publish the contents of the folder out/htdocs with any webserver of your choise, to make the plugin available. Afterwards, you can create a plugin at miro refering to your own webserver.
+
+Hint for your data protection officer: The relevant data does not leave your browser. The plugin is delivered in form of static content (html and js code) which is executed locally in your browser only accessing the API of miro.
+
