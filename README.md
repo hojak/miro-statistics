@@ -24,7 +24,7 @@ npm run local
 Afterwards, the result is available at the address http://localhost:8088
 
 You can now follow the instructions in section "3. Create an app" of
-[miro: How to build a web-plugin](https://developers.miro.com/docs/how-to-start#3-create-an-app).
+[miro: How to build a web-plugin](https://developers.miro.com/v1.0/docs/create-your-app-in-miro).
 
 ### Testing
 
