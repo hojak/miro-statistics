@@ -2,6 +2,20 @@
 
 This small projects adds tools for managing and analyzing a kanban board on virtual whiteboard in https://miro.com.
 
+
+## Features
+* Collect statistical data automatically when moving a Kanban Card over a board.
+![Screenshot Example Kanban Statistics](doc/example_filled.png)
+
+* Provide a Cumulative Flow Diagram based on the collected data. 
+![Screenshot Example CFD](doc/example_cfd.png) 
+
+* Provide a Lead Time Distribution Diagram based on the collected data. 
+![Screenshot Example LTD](doc/example_ltd.png) 
+
+* Provice a simple CVS export of the collected data.
+
+
 ## Development
 
 ### Build the Project
