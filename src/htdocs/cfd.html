@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Kanban CFD</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="utf-8"/>
+  <style>
+    #id {
+      width: 100%;
+      height: 90vh;
+    }
+
+    #my_chart {
+      width:100%;
+      height: 100%;
+    }
+
+  </style>
+</head>
+
+<body>
+  <h1>Kanban CFD Chart</h1>
+
+  <div id="chart">
+    <canvas id="my_chart"></canvas>
+  </div>
+
+<script>
+var columnLabels = ['Date 2','Date 3','Date 4','Date 5','Date 6','Date 7','Date 8']
+var dataRowLabels = ['Row 1', 'Row 2', 'Row 3', 'Row 4']
+var inputData = [
+  [1,2,3,4,5,6,7],
+  [0,0,0,1,1,1,2],
+  [0,0,0,4,3,2,1],
+  [1,2,2,3,2,1,2],
+];
+
+// https://colorbrewer2.org/?type=qualitative&scheme=Paired&n=12
+const CHART_COLORS = [
+  'rgb(166,206,227)',
+  'rgb(31,120,180)',
+  'rgb(178,223,138)',
+  'rgb(51,160,44)',
+  'rgb(251,154,153)',
+  'rgb(227,26,28)',
+  'rgb(253,191,111)',
+  'rgb(255,127,0)',
+  'rgb(202,178,214)',
+  'rgb(106,61,154)',
+  'rgb(255,255,153)',
+  'rgb(177,89,40)'
+];
+
+function getChartDataForInput () {
+  var result = [];
+  var counter = 0;
+
+  return inputData.map ( dataSet => {
+    const result = {
+      label: dataRowLabels[counter],
+      data: dataSet,
+      borderColor: CHART_COLORS[counter],
+      backgroundColor: CHART_COLORS[counter],
+      fill: true
+    }
+    counter ++;
+    return result;
+  });
+
+}
+
+
+var cfdChart;
+window.onload = function () {
+  const data = {
+    labels: columnLabels,
+    datasets: getChartDataForInput()
+  };
+
+  const config = {
+    type: 'line',
+    data: data,
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: (ctx) => 'Kanban CFD Chart'
+        },
+        tooltip: {
+          mode: 'index'
+        },
+      },
+      interaction: {
+        mode: 'nearest',
+        axis: 'x',
+        intersect: false
+      },
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'Date'
+          }
+        },
+        y: {
+          stacked: true,
+          title: {
+            display: true,
+            text: 'Number of Cards'
+          }
+        }
+      }
+    }
+  };
+
+  const ctx = document.getElementById('my_chart').getContext('2d');
+  cfdChart = new Chart(ctx, config);
+}
+</script>
+
+</body>
+
+</html>
