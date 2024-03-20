@@ -89,6 +89,12 @@ npm config set script-shell "C:\\Program Files\\Git\\bin\\bash.exe"
 *By the way, you can remove this directory by using `rmdir ./-p` - but you got this covered already, didn't you?*
 
 
+### Integration in Miro
+(needs some love)
+![Screenshot miro](doc/miro_team_apps.png)
+
+![Screenshot miro](doc/app_permissions.png)
+
 ## Deployment
 
 ### Option A: Run with npm.
