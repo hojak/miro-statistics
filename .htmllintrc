@@ -22,9 +22,7 @@
     "spec-char-escape": true,
     "text-ignore-regex": false,
     "tag-bans": [
-        //"style",
-        "b",
-        "i"
+        //"style"
     ],
     "tag-close": true,
     "tag-name-lowercase": true,
