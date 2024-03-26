@@ -1,4 +1,5 @@
 const StatusChangedEvent = require('./StatusChangedEvent')
+const StatusChangedEventFactory = require('./StatusChangedEventFactory')
 
 class ItemEventList {
   static get ERROR_NOT_AN_EVENT () { return 'not an event' }
@@ -102,9 +103,15 @@ class ItemEventList {
       return result
     }
 
-    miroString.split(ItemEventList.EVENT_SEPARATOR).map(part => StatusChangedEvent.createFromMiroString(part, objectId)).forEach(e => result.addEvent(e))
+    miroString.split(ItemEventList.EVENT_SEPARATOR).map(part => StatusChangedEventFactory.createFromMiroString(part, objectId)).forEach(e => result.addEvent(e))
 
     return result
+  }
+
+  static filterDummyEvents (itemEventList) {
+    return new ItemEventList(itemEventList.getItems().filter(function (event) {
+      return !event.isDummy()
+    }))
   }
 }
 

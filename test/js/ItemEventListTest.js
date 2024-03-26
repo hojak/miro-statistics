@@ -113,14 +113,21 @@ describe('ItemEventList', function () {
       })
     })
 
+    it('has to create a list with a dummy', function () {
+      const testee = ItemEventList.createFromMiroString('<p>work: 2021-07-10 10:00,</p><p>active: yyyy-mm-dd hh:mm</p>', 'someId')
+      expect(testee.getItems().length).to.be.equal(2)
+      expect(ItemEventList.filterDummyEvents(testee).getItems().length).to.be.equal(1)
+    })
+
     it('has to generate an empty list', function () {
       expect(ItemEventList.createFromMiroString('').getSize()).to.be.equal(0)
     })
 
     it('has to use the object id for each event', function () {
       const objectId = 'objectId'
-      const testee = ItemEventList.createFromMiroString('work: 2021-07-10 10:00,\nactive: 2021-08-10 11:00', objectId)
+      const testee = ItemEventList.createFromMiroString('<p>work: 2021-07-10 10:00,</p><p>active: 2021-08-10 11:00</p>', objectId)
 
+      expect(testee.getItems().length).to.be.equal(2)
       testee.getItems().forEach(event => {
         expect(event.objectId).to.be.equal(objectId)
       })

@@ -1,8 +1,10 @@
 const dayjs = require('../../node_modules/dayjs/dayjs.min')
 
 class StatusChangedEvent {
+  static get DATE_TIME_PATTERN () { return 'YYYY-MM-DD HH:mm' }
+
   static formatTimeStamp (timestamp) {
-    return dayjs(timestamp).format('YYYY-MM-DD HH:mm')
+    return dayjs(timestamp).format(StatusChangedEvent.DATE_TIME_PATTERN)
   }
 
   constructor (objectId, newStatus, timestamp = null) {
@@ -27,6 +29,10 @@ class StatusChangedEvent {
     return this._newStatus
   }
 
+  isDummy () {
+    return false
+  }
+
   toCSV () {
     return this._objectId + ';' +
       this._newStatus + ';' +
@@ -42,19 +48,6 @@ class StatusChangedEvent {
 
   get readableMiroRepresentation () {
     return this.newStatus + ': ' + StatusChangedEvent.formatTimeStamp(this.timestamp)
-  }
-
-  static createFromMiroString (miroString, objectId) {
-    const colonPosition = miroString.indexOf(':')
-
-    if (colonPosition === -1) {
-      return null
-    }
-
-    const status = miroString.substr(0, colonPosition).trim()
-    const dateString = miroString.substr(colonPosition + 1).trim()
-
-    return new StatusChangedEvent(objectId, status, Date.parse(dateString))
   }
 }
 
