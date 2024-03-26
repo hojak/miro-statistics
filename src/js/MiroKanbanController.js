@@ -24,7 +24,7 @@ class MiroKanbanController {
     return cardData.map(
       function (card) {
         try {
-          return MiroTextHelper.extractEventList(card.description, card.id)
+          return ItemEventList.filterDummyEvents(MiroTextHelper.extractEventList(card.description, card.id))
         } catch (error) {
           console.log("Error in Eventlist of '" + card.title + "'")
           return new ItemEventList()
