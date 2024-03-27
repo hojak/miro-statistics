@@ -1,5 +1,3 @@
-// const StatusChangedEvent = require('./StatusChangedEvent')
-
 class CfdAnalyzer {
   constructor (columnDefinition, eventList) {
     this._boardColumns = columnDefinition

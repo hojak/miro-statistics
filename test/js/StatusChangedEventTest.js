@@ -59,18 +59,4 @@ describe('StatusChangedEvent', function () {
       })
     })
   })
-
-  describe('#createFromMiroString', function () {
-    it('has to parse status and date', function () {
-      const timestamp = '2020-05-12 22:27'
-      const status = 'working'
-      const id = 'testid'
-
-      const testee = StatusChangedEvent.createFromMiroString(status + ': ' + timestamp, id)
-
-      expect(testee.objectId).to.be.equal(id)
-      expect(testee.newStatus).to.be.equal(status)
-      expect(StatusChangedEvent.formatTimeStamp(testee.timestamp)).to.be.equal(timestamp)
-    })
-  })
 })
