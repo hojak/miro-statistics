@@ -42,12 +42,16 @@ class StatusChangedEvent {
       '\n'
   }
 
+  formattedTimestamp () {
+    return StatusChangedEvent.formatTimeStamp(this.timestamp)
+  }
+
   get timestamp () { return this._timestamp }
   get objectId () { return this._objectId }
   get newStatus () { return this._newStatus }
 
   get readableMiroRepresentation () {
-    return this.newStatus + ': ' + StatusChangedEvent.formatTimeStamp(this.timestamp)
+    return this.newStatus + ': ' + this.formattedTimestamp()
   }
 }
 

@@ -11,6 +11,10 @@ class StatusChangedEventTemplate extends StatusChangedEvent {
   isTemplate () {
     return true
   }
+
+  formattedTimestamp () {
+    return StatusChangedEvent.DATE_TIME_PATTERN
+  }
 }
 
 module.exports = StatusChangedEventTemplate
