@@ -1,5 +1,5 @@
 const StatusChangedEvent = require('./StatusChangedEvent')
-const StatusChangedEventDummy = require('./StatusChangedEventDummy')
+const StatusChangedEventTemplate = require('./StatusChangedEventTemplate')
 
 class StatusChangedEventFactory {
   static createFromMiroString (miroString, objectId) {
@@ -13,7 +13,7 @@ class StatusChangedEventFactory {
     const dateString = miroString.substr(colonPosition + 1).trim()
 
     if (dateString.toLowerCase() === StatusChangedEvent.DATE_TIME_PATTERN.toLowerCase()) {
-      return new StatusChangedEventDummy(objectId, status)
+      return new StatusChangedEventTemplate(objectId, status)
     }
 
     return new StatusChangedEvent(objectId, status, Date.parse(dateString))

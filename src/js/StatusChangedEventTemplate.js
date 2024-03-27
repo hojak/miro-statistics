@@ -1,6 +1,6 @@
 const StatusChangedEvent = require('./StatusChangedEvent')
 
-class StatusChangedEventDummy extends StatusChangedEvent {
+class StatusChangedEventTemplate extends StatusChangedEvent {
   constructor (objectId, newStatus) {
     super(objectId, newStatus, null)
     this._objectId = objectId
@@ -8,9 +8,9 @@ class StatusChangedEventDummy extends StatusChangedEvent {
     this._timestamp = StatusChangedEvent.DATE_TIME_PATTERN
   }
 
-  isDummy () {
+  isTemplate () {
     return true
   }
 }
 
-module.exports = StatusChangedEventDummy
+module.exports = StatusChangedEventTemplate

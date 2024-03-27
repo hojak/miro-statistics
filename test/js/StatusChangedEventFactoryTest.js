@@ -1,7 +1,7 @@
 const { expect } = require('chai')
 const StatusChangedEventFactory = require('../../src/js/StatusChangedEventFactory')
 const StatusChangedEvent = require('../../src/js/StatusChangedEvent')
-const StatusChangedEventDummy = require('../../src/js/StatusChangedEventDummy')
+const StatusChangedEventTemplate = require('../../src/js/StatusChangedEventTemplate')
 
 describe('StatusChangedEventFactory', function () {
   describe('#createFromMiroString', function () {
@@ -25,7 +25,7 @@ describe('StatusChangedEventFactory', function () {
 
       const testee = StatusChangedEventFactory.createFromMiroString(status + ': ' + timestamp, id)
 
-      expect(testee).to.be.instanceOf(StatusChangedEventDummy)
+      expect(testee).to.be.instanceOf(StatusChangedEventTemplate)
       expect(testee.objectId).to.be.equal(id)
       expect(testee.newStatus).to.be.equal(status)
     })

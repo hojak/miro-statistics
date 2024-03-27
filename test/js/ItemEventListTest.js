@@ -4,7 +4,7 @@ const { expect } = require('chai')
 const { ERROR_NEIGHBOR_CONFLICT } = require('../../src/js/ItemEventList')
 const ItemEventList = require('../../src/js/ItemEventList')
 const StatusChangedEvent = require('../../src/js/StatusChangedEvent')
-const StatusChangedEventDummy = require('../../src/js/StatusChangedEventDummy')
+const StatusChangedEventTemplate = require('../../src/js/StatusChangedEventTemplate')
 
 describe('ItemEventList', function () {
   describe('#constructor()', function () {
@@ -114,10 +114,10 @@ describe('ItemEventList', function () {
       })
     })
 
-    it('has to create a list with a dummy', function () {
+    it('has to create a list with a template', function () {
       const testee = ItemEventList.createFromMiroString('<p>work: 2021-07-10 10:00,</p><p>active: yyyy-mm-dd hh:mm</p>', 'someId')
       expect(testee.getItems().length).to.be.equal(2)
-      expect(ItemEventList.filterDummyEvents(testee).getItems().length).to.be.equal(1)
+      expect(ItemEventList.filterTemplateEvents(testee).getItems().length).to.be.equal(1)
     })
 
     it('has to generate an empty list', function () {
@@ -174,28 +174,28 @@ describe('ItemEventList', function () {
     })
   })
 
-  describe('#filterDummyEventsByStatus', function () {
-    it('has to remove dummy events by status', function () {
+  describe('#filterTemplateEventsByStatus', function () {
+    it('has to remove template events by status', function () {
       const initialList = new ItemEventList()
-        .addEvent(new StatusChangedEventDummy('id', 'work'))
-        .addEvent(new StatusChangedEventDummy('id', 'discover'))
+        .addEvent(new StatusChangedEventTemplate('id', 'work'))
+        .addEvent(new StatusChangedEventTemplate('id', 'discover'))
         .addEvent(new StatusChangedEvent('id', 'deliver', new Date()))
         .addEvent(new StatusChangedEvent('id', 'done', new Date()))
 
       expect(initialList.getItems().length).to.be.equal(4)
-      initialList.filterDummyEventsByStatus('work')
+      initialList.filterTemplateEventsByStatus('work')
 
       expect(initialList.getItems().length).to.be.equal(3)
     })
     it('has not to remove non-dummy events by status', function () {
       const initialList = new ItemEventList()
         .addEvent(new StatusChangedEvent('id', 'work', new Date()))
-        .addEvent(new StatusChangedEventDummy('id', 'discover'))
+        .addEvent(new StatusChangedEventTemplate('id', 'discover'))
         .addEvent(new StatusChangedEvent('id', 'deliver', new Date()))
         .addEvent(new StatusChangedEvent('id', 'done', new Date()))
 
       expect(initialList.getItems().length).to.be.equal(4)
-      initialList.filterDummyEventsByStatus('work')
+      initialList.filterTemplateEventsByStatus('work')
 
       expect(initialList.getItems().length).to.be.equal(4)
     })

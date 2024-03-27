@@ -87,9 +87,9 @@ class ItemEventList {
     return result
   }
 
-  filterDummyEventsByStatus (newStatus) {
+  filterTemplateEventsByStatus (newStatus) {
     this.items = this.items.filter(event => {
-      return !event.isDummy() || event.newStatus !== newStatus
+      return !event.isTemplate() || event.newStatus !== newStatus
     })
     return this
   }
@@ -115,9 +115,9 @@ class ItemEventList {
     return result
   }
 
-  static filterDummyEvents (itemEventList) {
+  static filterTemplateEvents (itemEventList) {
     return new ItemEventList(itemEventList.getItems().filter(event => {
-      return !event.isDummy()
+      return !event.isTemplate()
     }))
   }
 }

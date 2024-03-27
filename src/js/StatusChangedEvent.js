@@ -29,7 +29,7 @@ class StatusChangedEvent {
     return this._newStatus
   }
 
-  isDummy () {
+  isTemplate () {
     return false
   }
 
