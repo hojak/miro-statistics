@@ -12,7 +12,7 @@ class StatusChangedEventTemplate extends StatusChangedEvent {
     return true
   }
 
-  formattedTimestamp () {
+  get formattedTimestamp () {
     return StatusChangedEvent.DATE_TIME_PATTERN
   }
 }
