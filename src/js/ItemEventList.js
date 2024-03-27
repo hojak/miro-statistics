@@ -87,6 +87,13 @@ class ItemEventList {
     return result
   }
 
+  filterDummyEventsByStatus (newStatus) {
+    this.items = this.items.filter(event => {
+      return !event.isDummy() || event.newStatus !== newStatus
+    })
+    return this
+  }
+
   static createFromMiroString (miroString, objectId) {
     const result = new ItemEventList()
 
@@ -109,7 +116,7 @@ class ItemEventList {
   }
 
   static filterDummyEvents (itemEventList) {
-    return new ItemEventList(itemEventList.getItems().filter(function (event) {
+    return new ItemEventList(itemEventList.getItems().filter(event => {
       return !event.isDummy()
     }))
   }

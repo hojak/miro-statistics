@@ -22,7 +22,7 @@ module.exports = {
 
   registerStatusChange: function (oldText, objectId, newStatus) {
     const foundList = this.extractEventList(oldText, objectId)
-    foundList.addEvent(new StatusChangedEvent(objectId, newStatus))
+    foundList.filterDummyEventsByStatus(newStatus).addEvent(new StatusChangedEvent(objectId, newStatus))
     return this.replaceEventList(oldText, foundList)
   },
 

@@ -4,6 +4,7 @@ const { expect } = require('chai')
 const { ERROR_NEIGHBOR_CONFLICT } = require('../../src/js/ItemEventList')
 const ItemEventList = require('../../src/js/ItemEventList')
 const StatusChangedEvent = require('../../src/js/StatusChangedEvent')
+const StatusChangedEventDummy = require('../../src/js/StatusChangedEventDummy')
 
 describe('ItemEventList', function () {
   describe('#constructor()', function () {
@@ -170,6 +171,33 @@ describe('ItemEventList', function () {
       expect(filteredList.getItems().length).to.be.equal(2)
       expect(listOfTimestamps).to.contain(100000)
       expect(listOfTimestamps).to.contain(200000)
+    })
+  })
+
+  describe('#filterDummyEventsByStatus', function () {
+    it('has to remove dummy events by status', function () {
+      const initialList = new ItemEventList()
+        .addEvent(new StatusChangedEventDummy('id', 'work'))
+        .addEvent(new StatusChangedEventDummy('id', 'discover'))
+        .addEvent(new StatusChangedEvent('id', 'deliver', new Date()))
+        .addEvent(new StatusChangedEvent('id', 'done', new Date()))
+
+      expect(initialList.getItems().length).to.be.equal(4)
+      initialList.filterDummyEventsByStatus('work')
+
+      expect(initialList.getItems().length).to.be.equal(3)
+    })
+    it('has not to remove non-dummy events by status', function () {
+      const initialList = new ItemEventList()
+        .addEvent(new StatusChangedEvent('id', 'work', new Date()))
+        .addEvent(new StatusChangedEventDummy('id', 'discover'))
+        .addEvent(new StatusChangedEvent('id', 'deliver', new Date()))
+        .addEvent(new StatusChangedEvent('id', 'done', new Date()))
+
+      expect(initialList.getItems().length).to.be.equal(4)
+      initialList.filterDummyEventsByStatus('work')
+
+      expect(initialList.getItems().length).to.be.equal(4)
     })
   })
 })
