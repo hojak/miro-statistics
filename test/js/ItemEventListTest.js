@@ -51,6 +51,21 @@ describe('ItemEventList', function () {
           .addEvent(new StatusChangedEvent('id', 'work', 110))
           .addEvent(new StatusChangedEvent('id', 'finished', 200)),
         new ItemEventList()
+          .addEvent(new StatusChangedEvent('id', 'new', 1))
+          .addEvent(new StatusChangedEventTemplate('id', 'start'))
+          .addEvent(new StatusChangedEvent('id', 'work', 110))
+          .addEvent(new StatusChangedEventTemplate('id', 'finished')),
+        new ItemEventList()
+          .addEvent(new StatusChangedEvent('id', 'new', 1))
+          .addEvent(new StatusChangedEvent('id', 'start', 10))
+          .addEvent(new StatusChangedEvent('id', 'work', 110))
+          .addEvent(new StatusChangedEventTemplate('id', 'finished')),
+        new ItemEventList()
+          .addEvent(new StatusChangedEvent('id', 'new', 1))
+          .addEvent(new StatusChangedEventTemplate('id', 'start'))
+          .addEvent(new StatusChangedEvent('id', 'work', 110))
+          .addEvent(new StatusChangedEvent('id', 'finished', 200)),
+        new ItemEventList()
           .addEvent(new StatusChangedEvent('id', 'work', 50)),
         new ItemEventList()
           .addEvent(new StatusChangedEvent('id', 'work', 150))
