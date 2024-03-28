@@ -28,13 +28,15 @@ class ItemEventList {
   }
 
   findInsertPosition (newEvent) {
-    if (this.items.length === 0) {
+    const itemsLength = this.items.length
+    if (itemsLength === 0) {
       return 0
-    } else if (this.items[this.items.length - 1].getTimestamp() <= newEvent.getTimestamp()) {
-      return this.items.length
+    }
+    if (!this.items[itemsLength - 1].isTemplate() && this.items[itemsLength - 1].getTimestamp() <= newEvent.getTimestamp()) {
+      return itemsLength
     } else {
-      let position = this.items.length - 1
-      while (position > 0 && this.items[position - 1].getTimestamp() > newEvent.getTimestamp()) {
+      let position = itemsLength - 1
+      while (position > 0 && !this.items[position - 1].isTemplate() && this.items[position - 1].getTimestamp() > newEvent.getTimestamp()) {
         position--
       }
       return position
